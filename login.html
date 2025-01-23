@@ -58,7 +58,7 @@
           alert('Login successful!');
           // Save the token to localStorage or sessionStorage
           localStorage.setItem('token', data.token);
-          window.location.href = 'dashboard.html'; // Redirect to dashboard or home page
+          window.location.href = 'index.html'; // Redirect to dashboard or home page
         } else {
           alert(`Login failed: ${data.message || 'Invalid credentials'}`);
         }
