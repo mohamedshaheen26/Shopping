@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background-color: #f2f2f2;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <h1>Our Store</h1>
+      <nav>
+        <ul>
+          <li>
+            <a class="cart" href="Products.html">
+              Products
+            </a>
+          </li>
+          <li>
+            <a class="cart" href="cart.html">
+              <i class="fas fa-shopping-cart"></i>
+              Cart
+            </a>
+          </li>
+          <li>
+            <a href="login.html" id="logoutButton">Logout</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <script>
+    // Check if the user is logged in
+    const token = localStorage.getItem('token');
+    if (!token) {
+      window.location.href = 'login.html'; // Redirect to login if no token
+    }
+
+    // Logout logic
+    document.getElementById('logoutButton').addEventListener('click', () => {
+      localStorage.removeItem('token');
+      window.location.href = 'login.html';
+    });
+  </script>
+</body>
+
+</html>
