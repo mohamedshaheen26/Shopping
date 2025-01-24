@@ -33,6 +33,11 @@
     </div>
   </div>
 
+  <!-- Loader Section -->
+  <div class="loader" id="loader">
+    <div class="loader-spinner"></div>
+  </div>
+
   <script>
     document.getElementById('loginForm').addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -54,11 +59,17 @@
 
         const data = await response.json();
         if (response.ok) {
-          alert('Login successful!');
           // Save the token and userId to localStorage
           localStorage.setItem('token', data.token);
           localStorage.setItem('userId', data.id); // Assuming the API returns userId
-          window.location.href = 'index.html'; // Redirect to dashboard or home page
+
+          // Show the loader
+          document.getElementById('loader').style.display = 'flex';
+
+          // Redirect to the home page after 2 seconds
+          setTimeout(() => {
+            window.location.href = 'index.html';
+          }, 2000);
         } else {
           alert(`Login failed: ${data.message || 'Invalid credentials'}`);
         }

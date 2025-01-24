@@ -46,8 +46,11 @@
       </form>
       <p class="text-center mb-0">Already have an account? <a href="login.html">Login here</a></p>
     </div>
-
   </div>
+
+  <!-- Loader Section -->
+  <div class="loader" id="loader">
+    <div class="loader-spinner"></div>
   </div>
 
   <script>
@@ -76,8 +79,10 @@
 
         const data = await response.json();
         if (response.ok) {
-          alert('Registration successful!');
-          window.location.href = 'login.html'; // Redirect to login page
+          document.getElementById('loader').style.display = 'flex';
+          setTimeout(() => {
+            window.location.href = 'index.html';
+          }, 2000);
         } else {
           alert(`Registration failed: ${data.message || 'Unknown error'}`);
         }
