@@ -10,36 +10,43 @@
 </head>
 
 <body>
-
   <div class="container-fluid" style="min-height:50vh;">
     <div class="main">
       <h1>Register</h1>
 
-      <form id="registerForm">
+      <form id="registerForm" novalidate>
         <div class="row">
           <div class="col-md-6 mb-2">
             <label class="form-label" for="firstName">First Name:</label>
-            <input class="form-control" type="text" id="firstName" name="firstName" required>
+            <input class="form-control" type="text" id="firstName" name="firstName" required minlength="2">
+            <div class="error-message" id="firstNameError"></div>
           </div>
           <div class="col-md-6 mb-2">
             <label class="form-label" for="lastName">Last Name:</label>
-            <input class="form-control" type="text" id="lastName" name="lastName" required>
+            <input class="form-control" type="text" id="lastName" name="lastName" required minlength="2">
+            <div class="error-message" id="lastNameError"></div>
           </div>
           <div class="col-md-12 mb-2">
             <label class="form-label" for="email">Email:</label>
             <input class="form-control" type="email" id="email" name="email" required>
+            <div class="error-message" id="emailError"></div>
           </div>
           <div class="col-md-12 mb-2">
             <label class="form-label" for="password">Password:</label>
-            <input class="form-control" type="password" id="password" name="password" required>
+            <input class="form-control" type="password" id="password" name="password" required minlength="6">
+            <div class="error-message" id="passwordError"></div>
           </div>
           <div class="col-md-6 mb-2">
             <label class="form-label" for="nationalID">National ID:</label>
-            <input class="form-control" type="number" id="nationalID" name="nationalID" required>
+            <input class="form-control" type="number" id="nationalID" name="nationalID" required minlength="10"
+              maxlength="10">
+            <div class="error-message" id="nationalIDError"></div>
           </div>
           <div class="col-md-6 mb-2">
             <label class="form-label" for="phoneNumber">Phone Number:</label>
-            <input class="form-control" type="number" id="phoneNumber" name="phoneNumber" required>
+            <input class="form-control" type="number" id="phoneNumber" name="phoneNumber" required minlength="10"
+              maxlength="10">
+            <div class="error-message" id="phoneNumberError"></div>
           </div>
         </div>
         <button type="submit">Register</button>
@@ -56,6 +63,15 @@
   <script>
     document.getElementById('registerForm').addEventListener('submit', async (e) => {
       e.preventDefault();
+
+      // Clear previous error messages
+      clearErrors();
+
+      // Validate form fields
+      const isValid = validateForm();
+      if (!isValid) {
+        return;
+      }
 
       const userData = {
         firstName: document.getElementById('firstName').value,
@@ -83,14 +99,80 @@
           setTimeout(() => {
             window.location.href = 'index.html';
           }, 2000);
-        } else {
-          alert(`Registration failed: ${data.message || 'Unknown error'}`);
         }
       } catch (error) {
         console.error('Error during registration:', error);
-        alert('An error occurred. Please try again.');
       }
     });
+
+    // Function to validate the form
+    function validateForm() {
+      let isValid = true;
+
+      // Validate First Name
+      const firstName = document.getElementById('firstName').value;
+      if (!firstName || firstName.length < 2) {
+        showError('firstNameError', 'First Name must be at least 2 characters long.');
+        isValid = false;
+      }
+
+      // Validate Last Name
+      const lastName = document.getElementById('lastName').value;
+      if (!lastName || lastName.length < 2) {
+        showError('lastNameError', 'Last Name must be at least 2 characters long.');
+        isValid = false;
+      }
+
+      // Validate Email
+      const email = document.getElementById('email').value;
+      if (!email || !validateEmail(email)) {
+        showError('emailError', 'Please enter a valid email address.');
+        isValid = false;
+      }
+
+      // Validate Password
+      const password = document.getElementById('password').value;
+      if (!password || password.length < 6) {
+        showError('passwordError', 'Password must be at least 6 characters long.');
+        isValid = false;
+      }
+
+      // Validate National ID
+      const nationalID = document.getElementById('nationalID').value;
+      if (!nationalID) {
+        showError('nationalIDError', 'Please enter a valid National ID.');
+        isValid = false;
+      }
+
+      // Validate Phone Number
+      const phoneNumber = document.getElementById('phoneNumber').value;
+      if (!phoneNumber) {
+        showError('phoneNumberError', 'Please enter a valid Phone Number.');
+        isValid = false;
+      }
+
+      return isValid;
+    }
+
+    // Function to validate email format
+    function validateEmail(email) {
+      const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return regex.test(email);
+    }
+
+    // Function to display error messages
+    function showError(elementId, message) {
+      const errorElement = document.getElementById(elementId);
+      errorElement.textContent = message;
+    }
+
+    // Function to clear all error messages
+    function clearErrors() {
+      const errorElements = document.querySelectorAll('.error-message');
+      errorElements.forEach((element) => {
+        element.textContent = '';
+      });
+    }
   </script>
 </body>
 

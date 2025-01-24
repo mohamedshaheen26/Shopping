@@ -19,11 +19,13 @@
           <div class="col-md-12 mb-2">
             <label class="form-label" for="email"> Email: </label>
             <input class="form-control" type="email" id="email" name="email" placeholder="Enter your Email" required>
+            <div class="error-message" id="emailError"></div>
           </div>
           <div class="col-md-12 mb-2">
             <label class="form-label" for="password"> Password:</label>
             <input class="form-control" type="password" id="password" name="password" placeholder="Enter your Password"
               required>
+            <div class="error-message" id="passwordError"></div>
           </div>
         </div>
         <button type="submit">Login</button>
@@ -41,6 +43,15 @@
   <script>
     document.getElementById('loginForm').addEventListener('submit', async (e) => {
       e.preventDefault();
+
+      // Clear previous error messages
+      clearErrors();
+
+      // Validate form fields
+      const isValid = validateForm();
+      if (!isValid) {
+        return;
+      }
 
       const credentials = {
         email: document.getElementById('email').value,
@@ -70,14 +81,52 @@
           setTimeout(() => {
             window.location.href = 'index.html';
           }, 2000);
-        } else {
-          alert(`Login failed: ${data.message || 'Invalid credentials'}`);
         }
       } catch (error) {
         console.error('Error during login:', error);
-        alert('An error occurred. Please try again.');
       }
     });
+
+    // Function to validate the form
+    function validateForm() {
+      let isValid = true;
+
+      // Validate Email
+      const email = document.getElementById('email').value;
+      if (!email || !validateEmail(email)) {
+        showError('emailError', 'Please enter a valid email address.');
+        isValid = false;
+      }
+
+      // Validate Password
+      const password = document.getElementById('password').value;
+      if (!password || password.length < 6) {
+        showError('passwordError', 'Password must be at least 6 characters long.');
+        isValid = false;
+      }
+
+      return isValid;
+    }
+
+    // Function to validate email format
+    function validateEmail(email) {
+      const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return regex.test(email);
+    }
+
+    // Function to display error messages
+    function showError(elementId, message) {
+      const errorElement = document.getElementById(elementId);
+      errorElement.textContent = message;
+    }
+
+    // Function to clear all error messages
+    function clearErrors() {
+      const errorElements = document.querySelectorAll('.error-message');
+      errorElements.forEach((element) => {
+        element.textContent = '';
+      });
+    }
   </script>
 </body>
 

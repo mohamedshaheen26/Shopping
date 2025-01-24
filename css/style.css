@@ -78,6 +78,12 @@ ul {
     transform: rotate(360deg);
   }
 }
+
+.error-message {
+  color: red;
+  font-size: 0.875em;
+  margin-top: 0.25rem;
+}
 /* Login */
 body {
   font-family: sans-serif;
