@@ -10,27 +10,26 @@
 </head>
 
 <body>
-  <div class="container-fluid" style="min-height:50vh;">
+  <div class="container-fluid">
     <div class="main">
-      <h1>Login To Your Account</h1>
+      <h1>Login</h1>
 
       <form id="loginForm">
-        <label for="email">
-          Email:
-        </label>
-        <input type="email" id="email" name="email" placeholder="Enter your Email" required>
-
-        <label for="password">
-          Password:
-        </label>
-        <input type="password" id="password" name="password" placeholder="Enter your Password" required>
-
-        <div class="wrap">
-          <button type="submit">Login</button>
+        <div class="row">
+          <div class="col-md-12 mb-2">
+            <label class="form-label" for="email"> Email: </label>
+            <input class="form-control" type="email" id="email" name="email" placeholder="Enter your Email" required>
+          </div>
+          <div class="col-md-12 mb-2">
+            <label class="form-label" for="password"> Password:</label>
+            <input class="form-control" type="password" id="password" name="password" placeholder="Enter your Password"
+              required>
+          </div>
         </div>
+        <button type="submit">Login</button>
       </form>
 
-      <p>Don't have an account? <a href="register.html">Register here</a></p>
+      <p class="text-center mb-0">Don't have an account? <a href="register.html">Register here</a></p>
     </div>
   </div>
 
@@ -56,8 +55,9 @@
         const data = await response.json();
         if (response.ok) {
           alert('Login successful!');
-          // Save the token to localStorage or sessionStorage
+          // Save the token and userId to localStorage
           localStorage.setItem('token', data.token);
+          localStorage.setItem('userId', data.id); // Assuming the API returns userId
           window.location.href = 'index.html'; // Redirect to dashboard or home page
         } else {
           alert(`Login failed: ${data.message || 'Invalid credentials'}`);

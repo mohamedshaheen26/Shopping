@@ -16,29 +16,37 @@
       <h1>Register</h1>
 
       <form id="registerForm">
-        <label for="firstName">First Name:</label>
-        <input type="text" id="firstName" name="firstName" required>
-
-        <label for="lastName">Last Name:</label>
-        <input type="text" id="lastName" name="lastName" required>
-
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-
-        <label for="nationalID">National ID:</label>
-        <input type="text" id="nationalID" name="nationalID" required>
-
-        <label for="phoneNumber">Phone Number:</label>
-        <input type="text" id="phoneNumber" name="phoneNumber" required>
-
+        <div class="row">
+          <div class="col-md-6 mb-2">
+            <label class="form-label" for="firstName">First Name:</label>
+            <input class="form-control" type="text" id="firstName" name="firstName" required>
+          </div>
+          <div class="col-md-6 mb-2">
+            <label class="form-label" for="lastName">Last Name:</label>
+            <input class="form-control" type="text" id="lastName" name="lastName" required>
+          </div>
+          <div class="col-md-12 mb-2">
+            <label class="form-label" for="email">Email:</label>
+            <input class="form-control" type="email" id="email" name="email" required>
+          </div>
+          <div class="col-md-12 mb-2">
+            <label class="form-label" for="password">Password:</label>
+            <input class="form-control" type="password" id="password" name="password" required>
+          </div>
+          <div class="col-md-6 mb-2">
+            <label class="form-label" for="nationalID">National ID:</label>
+            <input class="form-control" type="number" id="nationalID" name="nationalID" required>
+          </div>
+          <div class="col-md-6 mb-2">
+            <label class="form-label" for="phoneNumber">Phone Number:</label>
+            <input class="form-control" type="number" id="phoneNumber" name="phoneNumber" required>
+          </div>
+        </div>
         <button type="submit">Register</button>
+      </form>
+      <p class="text-center mb-0">Already have an account? <a href="login.html">Login here</a></p>
     </div>
-    </form>
 
-    <p class="text-center">Already have an account? <a href="login.html">Login here</a></p>
   </div>
   </div>
 

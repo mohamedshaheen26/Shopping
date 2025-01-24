@@ -20,26 +20,59 @@
 
 <body>
   <header>
+    <!-- NAV  -->
     <div class="container">
-      <h1>Our Store</h1>
+      <a href="#" class="logo">Our <span>S</span>tore</a>
       <nav>
-        <ul>
+        <ul class="links">
           <li>
-            <a class="cart" href="Products.html">
+            <a class="home" href="index.html">
+              Home
+            </a>
+          </li>
+          <li>
+            <a href="Products.html">
               Products
             </a>
           </li>
+        </ul>
+      </nav>
+      <nav>
+        <ul>
           <li>
-            <a class="cart" href="cart.html">
+            <a class="cart_icon" href="javascript:void(0)" id="cart-icon" title="Add to Card">
               <i class="fas fa-shopping-cart"></i>
-              Cart
             </a>
           </li>
           <li>
-            <a href="login.html" id="logoutButton">Logout</a>
+            <a href="login.html" id="logoutButton" title="Logout">
+              <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            </a>
           </li>
         </ul>
       </nav>
+
+      <div class="cart">
+        <h2 class="cart-title">Your Cart</h2>
+
+        <!-- CONTENT  -->
+        <div class="cart-content">
+
+
+        </div>
+
+        <!-- TOTAL   -->
+        <div class="total">
+          <div class="total-title">Total</div>
+          <div class="total-price">$0</div>
+        </div>
+        <!-- BUY BUTTON  -->
+        <button type="button" class="btn-buy">Buy Now</button>
+        <!-- CART CLOSE  -->
+        <a href="javascript:void(0)">
+          <i class='fas fa-times' id="cart-close"></i>
+        </a>
+      </div>
     </div>
   </header>
 
@@ -56,6 +89,7 @@
       window.location.href = 'login.html';
     });
   </script>
+  <script src="js/main.js"></script>
 </body>
 
 </html>
