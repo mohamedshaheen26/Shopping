@@ -11,6 +11,7 @@
   text-decoration: none !important;
   scroll-behavior: smooth;
   scroll-padding: 2rem;
+  transition: 0.5s;
 }
 /* Variables  */
 :root {
@@ -47,8 +48,12 @@ ul {
   margin: 0;
 }
 
+a {
+  color: var(--sec-color);
+}
+
 a:hover {
-  color: unset;
+  color: var(--main-color);
 }
 
 .disabled {
@@ -113,7 +118,6 @@ body {
   border-radius: 15px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
   padding: 20px 20px;
-  transition: transform 0.2s;
   width: 400px;
 }
 
@@ -145,6 +149,10 @@ button {
   font-size: 16px;
 }
 
+button:hover {
+  background-color: var(--main-color);
+}
+
 .wrap {
   display: flex;
   justify-content: center;
@@ -167,7 +175,6 @@ button {
   padding: 10px 15px;
   border-radius: 5px;
   background-color: #242424;
-  transition: background-color 0.3s ease;
 }
 
 .categoryFilter li a:hover {
@@ -203,7 +210,6 @@ header .container {
 
 .logo:hover {
   color: var(--main-color);
-  transition: 0.3s;
 }
 
 .logo span {
@@ -227,7 +233,6 @@ nav ul a:hover,
 nav ul a.active:hover::after,
 nav ul a.active {
   color: var(--main-color);
-  transition: 0.3s;
 }
 
 .links li {
@@ -273,11 +278,9 @@ nav ul a.active {
   background-color: var(--bg-color);
   box-shadow: -2px solid 4px hsl(0 4% 15% / 10%);
   border: 1px solid var(--main-color);
-  transition: 1.5s;
 }
 .cart.active {
   right: 0;
-  transition: 0.5s;
 }
 .cart-title {
   text-align: center;
@@ -400,11 +403,10 @@ nav ul a.active {
   background-color: #ff6f61;
   border-radius: 50px;
   text-decoration: none;
-  transition: background-color 0.3s ease, transform 0.3s ease,
-    box-shadow 0.3s ease;
 }
 
 .hero-button:hover {
+  color: white;
   background-color: #e65a50;
   transform: scale(1.05);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -446,7 +448,6 @@ nav ul a.active {
 .product-box:hover {
   padding: 20px;
   border: 1px solid var(--text-color);
-  transition: 0.4s;
 }
 .product-img {
   width: 100%;
@@ -485,7 +486,6 @@ nav ul a.active {
   padding: 10px;
   cursor: pointer;
   border-radius: 10px;
-  transition: 0.4s;
 }
 
 .product-box:hover .delete-item {
@@ -497,7 +497,6 @@ nav ul a.active {
   top: 60px;
   left: -335px;
   width: fit-content;
-  transition: 0.4s;
   z-index: 99999;
 }
 
