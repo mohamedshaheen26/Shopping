@@ -243,7 +243,6 @@
         }
 
         const data = await response.json();
-        console.log("Category added successfully:", data);
 
         // Close the modal
         const modal = bootstrap.Modal.getInstance(document.getElementById("addCategoryModal"));
@@ -289,9 +288,9 @@
       // Disable the button and show loader
       addProductButton.disabled = true;
       addProductButton.innerHTML = `
-        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-        Adding...
-      `;
+    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    Adding...
+  `;
 
       const formData = new FormData();
       formData.append("Name", itemName);
@@ -299,7 +298,7 @@
       formData.append("Price", itemPrice);
       formData.append("Stock", itemStock);
       formData.append("CategoryId", categoryId);
-      formData.append("Image", itemImage);
+      formData.append("imageFile", itemImage);
 
       try {
         const response = await fetch(`${API_BASE_URL}/Product`, {
@@ -358,7 +357,6 @@
     function renderItems(items) {
       const itemsContainer = document.getElementById("items");
       itemsContainer.innerHTML = "";
-      console.log(items);
 
       items.forEach((item) => {
         const itemElement = document.createElement("div");
@@ -371,14 +369,28 @@
         <a href="javascript:void(0)" class="add-cart" data-item-id="${item.id}" data-item='${JSON.stringify(item)}' onclick="addToCart('${userId}', this)">
           <i class='fas fa-shopping-cart'></i>
         </a>
-        <a href="javascript:void(0)" class="text-danger">
-          <i class='fas fa-trash delete-item' onclick="deleteItem(${item.id})"></i>
+        <a href="javascript:void(0)" class="delete-item text-danger" onclick="deleteItem(${item.id})">
+          <i class='fas fa-trash delete-item'></i>
         </a>
       </div>
     `;
         itemsContainer.appendChild(itemElement);
       });
     }
+
+    // Delete an item
+    async function deleteItem(itemId) {
+      try {
+        const response = await fetch(`${API_BASE_URL}/Product/${itemId}`, {
+          method: "DELETE",
+        });
+        if (!response.ok) throw new Error("Failed to delete item");
+        fetchItems(); // Refresh the list
+      } catch (error) {
+        console.error("Error deleting item:", error);
+      }
+    }
+
     // Add to cart
     async function addToCart(userId, element) {
       // Parse the item string back into an object
@@ -705,7 +717,7 @@
     fetchUserCart(userId); // Fetch the user's cart on page load
   </script>
 
-  <script src="js/main.js"></script>
+  <script src="js/main.js" defer></script>
 </body>
 
 </html>
