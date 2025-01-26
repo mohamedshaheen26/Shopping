@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Product Management</title>
+  <title>Shopping</title>
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
@@ -24,7 +24,7 @@
             </a>
           </li>
           <li>
-            <a href="Products.html">
+            <a class="active" href="Products.html">
               Products
             </a>
           </li>
@@ -78,13 +78,13 @@
             <div class="d-flex justify-content-between align-items-center gap-2 mb-3">
               <!-- Button to trigger the "Add Category" modal -->
               <button type="button" class="btn btn-success mb-3" data-bs-toggle="modal"
-                data-bs-target="#addCategoryModal">
+                data-bs-target="#addCategoryModal" id="addCategoryButton">
                 Add Category
               </button>
 
               <!-- Button to trigger the "Add Product" modal -->
               <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal"
-                data-bs-target="#addProductModal">
+                data-bs-target="#addProductModal" id="addProductButton">
                 Add Product
               </button>
             </div>
@@ -104,9 +104,11 @@
             <div class="modal-body">
               <!-- Add Category Form -->
               <form>
-                <div class="mb-3">
-                  <label for="categoryName" class="form-label">Category Name</label>
-                  <input type="text" class="form-control" id="categoryName" required />
+                <div class="row">
+                  <div class="col-md-12 mb-2">
+                    <label for="categoryName" class="form-label">Category Name</label>
+                    <input type="text" class="form-control" id="categoryName" required />
+                  </div>
                 </div>
               </form>
             </div>
@@ -130,31 +132,33 @@
             <div class="modal-body">
               <!-- Add Product Form -->
               <form>
-                <div class="mb-3">
-                  <label for="itemName" class="form-label">Product Name</label>
-                  <input type="text" class="form-control" id="itemName" required />
-                </div>
-                <div class="mb-3">
-                  <label for="itemPrice" class="form-label">Price</label>
-                  <input type="number" class="form-control" id="itemPrice" required />
-                </div>
-                <div class="mb-3">
-                  <label for="itemDescription" class="form-label">Description</label>
-                  <input type="text" class="form-control" id="itemDescription" />
-                </div>
-                <div class="mb-3">
-                  <label for="itemStock" class="form-label">Stock</label>
-                  <input type="number" class="form-control" id="itemStock" />
-                </div>
-                <div class="mb-3">
-                  <label for="categorySelect" class="form-label">Category</label>
-                  <select class="form-select" id="categorySelect" required>
-                    <!-- Options will be populated dynamically -->
-                  </select>
-                </div>
-                <div class="mb-3">
-                  <label for="itemImage" class="form-label">Product Image</label>
-                  <input type="file" class="form-control" id="itemImage" accept="image/*" required />
+                <div class="row">
+                  <div class="col-md-12 mb-2">
+                    <label for="itemName" class="form-label">Product Name</label>
+                    <input type="text" class="form-control" id="itemName" required />
+                  </div>
+                  <div class="col-md-12 mb-2">
+                    <label for="itemDescription" class="form-label">Description</label>
+                    <input type="text" class="form-control" id="itemDescription" />
+                  </div>
+                  <div class="col-md-6 mb-2">
+                    <label for="itemPrice" class="form-label">Price</label>
+                    <input type="number" class="form-control" id="itemPrice" required />
+                  </div>
+                  <div class="col-md-6 mb-2">
+                    <label for="itemStock" class="form-label">Stock</label>
+                    <input type="number" class="form-control" id="itemStock" />
+                  </div>
+                  <div class="col-md-12 mb-2">
+                    <label for="categorySelect" class="form-label">Category</label>
+                    <select class="form-select" id="categorySelect" required>
+                      <!-- Options will be populated dynamically -->
+                    </select>
+                  </div>
+                  <div class="col-md-12 mb-2">
+                    <label for="itemImage" class="form-label">Product Image</label>
+                    <input type="file" class="form-control" id="itemImage" accept="image/*" required />
+                  </div>
                 </div>
               </form>
             </div>
@@ -181,7 +185,12 @@
     let userCartId = null; // Store the user's cart ID
     const userId = window.localStorage.getItem("userId"); // Replace with the actual user ID
     let cartId = null;
-    let itemsInCart = new Set();
+
+    if (userId === null) {
+      document.getElementById("addCategoryButton").remove();
+      document.getElementById("addProductButton").remove();
+    }
+
     // Fetch and display categories
     async function fetchCategories() {
       try {
@@ -288,9 +297,9 @@
       // Disable the button and show loader
       addProductButton.disabled = true;
       addProductButton.innerHTML = `
-    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-    Adding...
-  `;
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Adding...
+      `;
 
       const formData = new FormData();
       formData.append("Name", itemName);
@@ -362,18 +371,18 @@
         const itemElement = document.createElement("div");
         itemElement.className = "col-sm-6 col-md-4 col-lg-3 mb-4";
         itemElement.innerHTML = `
-      <div class="product-box">
-        <img src="https://nshopping.runasp.net${item.imageUrl}" alt="${item.name}" class="product-img">
-        <h2 class="product-title">${item.name}</h2>
-        <span class="product-price">Price: $${item.price}</span>
-        <a href="javascript:void(0)" class="add-cart" data-item-id="${item.id}" data-item='${JSON.stringify(item)}' onclick="addToCart('${userId}', this)">
-          <i class='fas fa-shopping-cart'></i>
-        </a>
-        <a href="javascript:void(0)" class="delete-item text-danger" onclick="deleteItem(${item.id})">
-          <i class='fas fa-trash delete-item'></i>
-        </a>
-      </div>
-    `;
+          <div class="product-box">
+            <img src="https://nshopping.runasp.net${item.imageUrl}" alt="${item.name}" class="product-img">
+            <h2 class="product-title">${item.name}</h2>
+            <span class="product-price">Price: $${item.price}</span>
+            <a href="javascript:void(0)" class="add-cart" data-item-id="${item.id}" data-item='${JSON.stringify(item)}' onclick="addToCart('${userId}', this)">
+              <i class='fas fa-shopping-cart'></i>
+            </a>
+            ${userId ? `<a href="javascript:void(0)" class="delete-item text-danger" onclick="deleteItem(${item.id})">
+              <i class='fas fa-trash delete-item'></i>
+            </a>` : ""}
+          </div>
+        `;
         itemsContainer.appendChild(itemElement);
       });
     }
@@ -403,6 +412,17 @@
         if (!userCartId) return; // Exit if cart creation fails
       }
 
+      // Fetch the user's cart to check if the item is already in it
+      const cart = await fetchUserCart(userId);
+      if (cart && cart.cartItems) {
+        const isItemInCart = cart.cartItems.some(cartItem => cartItem.productId === item.id);
+
+        if (isItemInCart) {
+          showAlert(`${item.name} is already in your cart!`, "warning");
+          return; // Exit if the item is already in the cart
+        }
+      }
+
       // Add the item to the cart
       const cartItem = await addItemToCart(userCartId, item.id, 1);
 
@@ -415,7 +435,7 @@
         const addCartButton = document.querySelector(`.add-cart[data-item-id="${item.id}"]`);
         if (addCartButton) {
           addCartButton.classList.add("disabled");
-          addCartButton.innerHTML = `<i class='fas fa-shopping-cart'></i> Added`;
+          addCartButton.innerHTML = `<i class='fas fa-check'></i>`;
         }
       }
     }
@@ -423,6 +443,11 @@
     // Create a cart for the user
     async function createCart(userId) {
       try {
+        if (window.localStorage.getItem("userId") === null) {
+          showAlert("You must be logged in to add items to your cart.", "warning");
+          return;
+        }
+
         const response = await fetch(`${API_BASE_URL}/Cart/Create/${userId}`, {
           method: "POST",
           headers: {
@@ -430,15 +455,10 @@
           },
         });
 
-        if (!response.ok) {
-          throw new Error("Failed to create cart");
-        }
-
         const cart = await response.json();
         return cart.id; // Return the cart ID
       } catch (error) {
         console.error("Error creating cart:", error);
-        showAlert("Failed to create cart. Please try again.", "danger");
         return null;
       }
     }
@@ -470,25 +490,26 @@
     // Fetch user's cart
     async function fetchUserCart(userId) {
       try {
-        const response = await fetch(`${API_BASE_URL}/Cart/GetByUser/${userId}`, {
-          headers: {
-            "Authorization": `Bearer ${localStorage.getItem("token")}`,
-            "accept": "text/plain", // Add this header if required by the API
-          },
-        });
+        if (userId) {
+          const response = await fetch(`${API_BASE_URL}/Cart/GetByUser/${userId}`, {
+            headers: {
+              "Authorization": `Bearer ${localStorage.getItem("token")}`,
+              "accept": "text/plain", // Add this header if required by the API
+            },
+          });
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch user cart");
+          if (!response.ok) {
+            throw new Error("Failed to fetch user cart");
+          }
+
+          const cart = await response.json();
+          cartId = cart.id;
+          const cartItems = cart.cartItems || [];
+          updateCartUI(cartItems); // Update the cart UI
+          return cart;
         }
-
-        const cart = await response.json();
-        cartId = cart.id;
-        const cartItems = cart.cartItems || [];
-        updateCartUI(cartItems); // Update the cart UI
-        return cart;
       } catch (error) {
         console.error("Error fetching user cart:", error);
-        showAlert("Failed to fetch cart. Please try again.", "danger");
         return null;
       }
     }
@@ -518,12 +539,6 @@
 
     // Update the quantity of an item in the cart
     async function updateCartItemQuantity(cartItemId, newQuantity) {
-      if (newQuantity < 1) {
-        // If the new quantity is less than 1, remove the item from the cart
-        await removeFromCart(cartItemId);
-        return;
-      }
-
       try {
         // Step 1: Fetch the cart item details
         const cartResponse = await fetch(`${API_BASE_URL}/Cart/GetByUser/${userId}`, {
@@ -620,13 +635,15 @@
                 </button>
               </div>
             </div>
-          </div>`;
+          </div>
+        `;
         cartContent.appendChild(cartItemElement);
       });
 
       const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
       totalPriceElement.textContent = `$${totalPrice.toFixed(2)}`;
     }
+
     // Remove item from cart
     async function removeItemFromCart(cartId, cartItemId) {
       try {
@@ -648,16 +665,8 @@
 
     // Buy Now
     async function buyNow() {
-      if (!userCartId) {
-        showAlert("Your cart is empty. Add items to proceed.", "warning");
-        return;
-      }
-
       // Simulate a successful purchase
       showAlert("Thank you for your purchase!", "success");
-
-      // Clear the cart UI locally
-      updateCartUI([]);
 
       // Optionally, reset the cart ID (if needed)
       userCartId = null;
@@ -684,7 +693,7 @@
       }, 2000);
       setTimeout(() => {
         alertElement.remove();
-      }, 4000);
+      }, 3000);
     }
 
     // Reset form
