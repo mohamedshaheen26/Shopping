@@ -372,7 +372,7 @@
         itemElement.className = "col-sm-6 col-md-4 col-lg-3 mb-4";
         itemElement.innerHTML = `
           <div class="product-box">
-            <img src="https://nshopping.runasp.net${item.imageUrl}" alt="${item.name}" class="product-img">
+            <img src="${item.imageUrl}" alt="${item.name}" class="product-img">
             <h2 class="product-title">${item.name}</h2>
             <span class="product-price">Price: $${item.price}</span>
             <a href="javascript:void(0)" class="add-cart" data-item-id="${item.id}" data-item='${JSON.stringify(item)}' onclick="addToCart('${userId}', this)">
