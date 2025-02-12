@@ -345,27 +345,49 @@
       }
     }
 
-    // Fetch and display items
-    async function fetchItems() {
+    async function fetchCategoryProducts(categoryId) {
       try {
-        const response = await fetch(`${API_BASE_URL}/Product`);
-        if (!response.ok) throw new Error("Failed to fetch items");
+        const response = await fetch(`https://nshopping.runasp.net/api/Product`);
+        if (!response.ok) throw new Error("Failed to fetch products");
 
-        const items = await response.json();
+        const allProducts = await response.json();
 
-        // Render items
-        renderItems(items);
+        // Filter products based on the categoryId
+        const filteredProducts = allProducts.filter(
+          (product) => product.categoryId === parseInt(categoryId)
+        );
+
+        if (categoryId) {
+          // Render items
+          renderItems(filteredProducts, categoryId);
+        } else {
+          // Render items
+          renderItems(allProducts, categoryId);
+        }
+
       } catch (error) {
-        console.error("Error fetching items:", error);
-        const itemsContainer = document.getElementById("items");
-        itemsContainer.innerHTML = "<p class='text-danger'>Failed to load items. Check the console for details.</p>";
+        console.error("Error fetching products:", error);
+        document.getElementById("products-list").innerHTML =
+          "<p>Failed to load products.</p>";
       }
     }
 
     // Render items
-    function renderItems(items) {
+    function renderItems(items, categoryId) {
       const itemsContainer = document.getElementById("items");
       itemsContainer.innerHTML = "";
+
+      if (items.length === 0) {
+        itemsContainer.innerHTML = "<p>No items found.</p>";
+        return;
+      }
+
+      if (categoryId) {
+        // Display the category name
+        const categoryElement = document.createElement("h2");
+        categoryElement.innerHTML = items[0].categoryName;
+        itemsContainer.appendChild(categoryElement);
+      }
 
       items.forEach((item) => {
         const itemElement = document.createElement("div");
@@ -722,7 +744,12 @@
 
     // Initial fetch to display data
     fetchCategories();
-    fetchItems();
+
+    // Extract categoryId from the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const categoryId = urlParams.get("categoryId");
+
+    fetchCategoryProducts(categoryId);
     fetchUserCart(userId); // Fetch the user's cart on page load
   </script>
 
