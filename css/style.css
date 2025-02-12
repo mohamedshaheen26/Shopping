@@ -539,6 +539,13 @@ nav ul a.active {
   }
 }
 
+@media (max-width: 495px) {
+  .shop,
+  .admin {
+    margin-top: 6rem !important;
+  }
+}
+
 @media (max-width: 480px) {
   .logo {
     flex-basis: 100%;
