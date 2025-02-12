@@ -132,8 +132,28 @@
 
       // Validate Password
       const password = document.getElementById('password').value;
+
+      // Define regex patterns
+      const hasUppercase = /[A-Z]/.test(password); // At least one uppercase letter
+      const hasLowercase = /[a-z]/.test(password); // At least one lowercase letter
+      const hasNumber = /[0-9]/.test(password); // At least one number
+      const hasSpecialChar = /[@]/.test(password); // At least one special character (@)
+
+      // Check password length and complexity
       if (!password || password.length < 6) {
-        showError('passwordError', 'Password must be at least 6 characters long.');
+        showError('passwordError', 'Password must be at least 6 characters.');
+        isValid = false;
+      } else if (!hasUppercase) {
+        showError('passwordError', 'Password must contain at least one uppercase letter.');
+        isValid = false;
+      } else if (!hasLowercase) {
+        showError('passwordError', 'Password must contain at least one lowercase letter.');
+        isValid = false;
+      } else if (!hasNumber) {
+        showError('passwordError', 'Password must contain at least one number.');
+        isValid = false;
+      } else if (!hasSpecialChar) {
+        showError('passwordError', 'Password must contain at least one special character (@, #).');
         isValid = false;
       }
 

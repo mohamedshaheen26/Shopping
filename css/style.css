@@ -569,6 +569,13 @@ nav ul a.active {
   }
 }
 
+@media (max-width: 378px) {
+  header .container {
+    justify-content: center;
+    gap: 10px;
+  }
+}
+
 /* For Small Devices */
 @media (max-width: 360px) {
   .shop {
