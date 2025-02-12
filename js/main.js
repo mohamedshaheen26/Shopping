@@ -26,6 +26,30 @@ document.getElementById("logoutButton").addEventListener("click", () => {
   window.location.href = "login.html";
 });
 
+// Show alert
+function showAlert(message, type) {
+  const alertContainer = document.getElementById("alertContainer");
+
+  // Create alert element
+  const alertElement = document.createElement("div");
+  alertElement.className = `alert alert-${type} alert-dismissible fade show`;
+  alertElement.setAttribute("role", "alert");
+  alertElement.innerHTML = message;
+  alertContainer.style.left = "0";
+  alertContainer.style.transition = "left 0.5s ease-in-out";
+  // Add the alert to the container
+  alertContainer.appendChild(alertElement);
+
+  // Automatically remove the alert after 5 seconds
+  setTimeout(() => {
+    alertContainer.style.left = "-500px";
+    alertContainer.style.transition = "left 0.5s ease-in-out";
+  }, 2000);
+  setTimeout(() => {
+    alertElement.remove();
+  }, 3000);
+}
+
 // Fetch categories and random images
 async function fetchCategoriesWithRandomImages() {
   try {
@@ -42,6 +66,13 @@ async function fetchCategoriesWithRandomImages() {
     if (!productsResponse.ok) throw new Error("Failed to fetch products");
 
     const allProducts = await productsResponse.json();
+
+    if (categories.length === 0) {
+      const categoriesproducts = document.getElementById("products");
+      categoriesproducts.innerHTML =
+        "<li value=''>No categories available</li>";
+      return;
+    }
 
     // Populate categories with random images
     const categoriesproducts = document.getElementById("products");

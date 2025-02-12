@@ -441,9 +441,11 @@ nav ul a.active {
 }
 
 /* SHOP SECTION  */
-.shop {
+.shop,
+.admin {
   margin-top: 2rem;
 }
+
 .section-title {
   font-style: 1.5rem;
   font-weight: 600;
