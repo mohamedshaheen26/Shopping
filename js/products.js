@@ -76,30 +76,10 @@ function renderItems(items, categoryId) {
     )}' onclick="addToCart('${userId}', this)">
           <i class='fas fa-shopping-cart'></i>
         </a>
-        ${
-          userId
-            ? `<a href="javascript:void(0)" class="delete-item text-danger" onclick="deleteItem(${item.id})">
-          <i class='fas fa-trash delete-item'></i>
-        </a>`
-            : ""
-        }
       </div>
     `;
     itemsContainer.appendChild(itemElement);
   });
-}
-
-// Delete an item
-async function deleteItem(itemId) {
-  try {
-    const response = await fetch(`${API_BASE_URL}/Product/${itemId}`, {
-      method: "DELETE",
-    });
-    if (!response.ok) throw new Error("Failed to delete item");
-    fetchCategoryProducts(categoryId); // Refresh the list
-  } catch (error) {
-    console.error("Error deleting item:", error);
-  }
 }
 
 // Add to cart
