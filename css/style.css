@@ -522,6 +522,17 @@ nav ul a.active {
   display: flex;
   align-items: center;
 }
+
+.blockquote {
+  border-left: 4px solid var(--main-color);
+  padding-left: 10px;
+}
+
+.card-body {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(150, 150, 150, 0.1);
+}
 /* ================ RESPONSIVE & BREAKPOINTS ============= */
 @media (max-width: 1080px) {
   .nav {

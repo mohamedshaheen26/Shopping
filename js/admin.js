@@ -199,7 +199,7 @@ async function displayCategories() {
             ${
               userId !== null
                 ? `
-                 <button class="w-auto p-1 bg-transparent text-danger m-0" onclick="openEditCategoryModal(${category.id}, '${category.name}')">
+                 <button class="w-auto p-1 bg-transparent text-secondary m-0" onclick="openEditCategoryModal(${category.id}, '${category.name}')">
                  <i class="fas fa-edit"></i>
                  </button>
                 <button class="w-auto p-1 bg-transparent text-danger m-0" id="delete-category" onclick="deleteCategory(${category.id})">
@@ -307,7 +307,7 @@ async function displayProducts() {
             ${
               userId !== null
                 ? `
-                <button class="w-auto p-1 bg-transparent text-danger m-0" onclick="openEditProductModal(${product.id})">
+                <button class="w-auto p-1 bg-transparent text-secondary m-0" onclick="openEditProductModal(${product.id})">
                 <i class="fas fa-edit"></i>
                 </button>
                 <button class="w-auto p-1 bg-transparent text-danger m-0"  id="delete-product" onclick="deleteProduct(${product.id})">
