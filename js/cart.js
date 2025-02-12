@@ -137,15 +137,6 @@ async function addToCart(userId, element) {
   // Update the cart UI
   updateCartUI(cart.cartItems);
 
-  // Disable the "Add to Cart" button for this item
-  const addCartButton = document.querySelector(
-    `.add-cart[data-item-id="${item.id}"]`
-  );
-  if (addCartButton) {
-    addCartButton.classList.add("disabled");
-    addCartButton.innerHTML = `<i class='fas fa-check'></i>`;
-  }
-
   showAlert(`${item.name} added to cart!`, "success");
 }
 
