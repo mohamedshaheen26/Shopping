@@ -26,6 +26,7 @@ document.getElementById("logoutButton").addEventListener("click", () => {
   window.location.href = "login.html";
 });
 
+// Fetch categories and random images
 async function fetchCategoriesWithRandomImages() {
   try {
     const categoryResponse = await fetch(
@@ -66,8 +67,8 @@ async function fetchCategoriesWithRandomImages() {
 
       const categoryItem = document.createElement("li");
       categoryItem.innerHTML = `
-        <a href="Products.html?categoryId=${category.id}">
-          <img src="${imageUrl}" alt="${category.name}" style="width: 100px; height: 100px; object-fit: cover;" />
+        <a href="Products.html?categoryId=${category.id}" class="category text-dark">
+          <img src="${imageUrl}" alt="${category.name}" style="width: 100px; height: 100px; object-fit: cover;" class="category-img rounded-circle " />
           <p>${category.name}</p>
         </a>
       `;
