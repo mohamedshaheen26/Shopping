@@ -30,7 +30,12 @@ function showAlert(message, type) {
 
 // Fetch categories and random images
 async function fetchCategoriesWithRandomImages() {
+  const loading = document.getElementById("loading");
+  
   try {
+    // Show loader
+    loading.style.display = "flex";
+
     const categoryResponse = await fetch(
       `https://nshopping.runasp.net/api/Category/AllCategories`
     );
@@ -89,6 +94,9 @@ async function fetchCategoriesWithRandomImages() {
     const categoriesproducts = document.getElementById("products");
     categoriesproducts.innerHTML =
       "<li value=''>Failed to load categories</li>";
+  } finally {
+    // Hide loader
+    loading.style.display = "none";
   }
 }
 

@@ -25,7 +25,11 @@ initializeCart();
 
 // Fetch and display items based on the category
 async function fetchCategoryProducts(categoryId) {
+  const loading = document.getElementById("loading");
   try {
+    // Show loader
+    loading.style.display = "flex";
+
     const response = await fetch(`${API_BASE_URL}/Product`);
     if (!response.ok) throw new Error("Failed to fetch products");
 
@@ -47,6 +51,9 @@ async function fetchCategoryProducts(categoryId) {
     console.error("Error fetching products:", error);
     document.getElementById("products-list").innerHTML =
       "<p>Failed to load products.</p>";
+  } finally {
+    // Hide loader and show products
+    loading.style.display = "none";
   }
 }
 
