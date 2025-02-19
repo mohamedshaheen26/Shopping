@@ -1,9 +1,9 @@
 /* Google Fonts  */
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Irish+Grover&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Irish+Grover&family=Italianno&display=swap");
 
 /* Globals  */
 * {
-  font-family: "Poppins", sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -14,10 +14,10 @@
 }
 /* Variables  */
 :root {
-  --main-color: #ff6f61;
-  --sec-color: #ff9a9e;
+  --main-color: #184671;
+  --sec-color: #184671;
   --text-color: #171427;
-  --bg-color: #fff;
+  --bg-color: #eece76;
 }
 
 ::selection {
@@ -46,10 +46,6 @@ img {
 ul {
   margin: 0;
   padding: 0;
-}
-
-a {
-  color: var(--sec-color);
 }
 
 a:hover {
@@ -191,21 +187,48 @@ header {
   background-color: var(--bg-color);
   box-shadow: 0 1px 4px hsl(0 4% 15% / 10%);
   z-index: 100;
-  padding: 15px;
-}
-
-header .container {
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
+  padding-inline: 60px;
 }
 
 .logo {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: var(--sec-color);
-  text-transform: uppercase;
+  font-size: 2.5rem;
+  color: var(--main-color);
+  font-family: "Italianno", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@media (max-width: 768px) {
+  header {
+    padding-inline: 20px;
+    padding-block: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo {
+    flex-basis: 100%;
+    text-align: center;
+  }
+  .links {
+    padding-left: 0;
+  }
+}
+
+@media (max-width: 400px) {
+  .nav {
+    padding: 11px;
+  }
+  .logo {
+    font-size: 2rem;
+  }
+  .cart {
+    width: 320px;
+  }
 }
 
 .logo:hover {
@@ -224,7 +247,7 @@ nav ul {
 }
 
 nav ul a {
-  color: var(--text-color);
+  color: white;
   font-size: 1rem;
   font-weight: 500;
 }
@@ -233,6 +256,7 @@ nav ul a:hover,
 nav ul a.active:hover::after,
 nav ul a.active {
   color: var(--main-color);
+  font-weight: bold;
 }
 
 .links li {
@@ -366,49 +390,55 @@ nav ul a.active {
 
 /* Hero Section Styling */
 .hero-section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   height: 100vh;
-  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  background-image: url("../images/hero-bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #f2f2f2;
   color: #fff;
   text-align: center;
   padding: 20px;
+
+  display: flex;
+  align-items: center;
 }
 
 .hero-content {
-  max-width: 800px;
+  max-width: 700px;
+}
+
+@media (max-width: 768px) {
+  .hero-content {
+    max-width: 300px;
+  }
 }
 
 .hero-headline {
-  font-size: 4rem;
-  font-weight: 700;
+  font-size: 6rem;
   margin-bottom: 20px;
-  text-transform: uppercase;
-  font-family: "Montserrat", sans-serif;
-}
-
-.hero-subtext {
-  font-size: 1.5rem;
-  margin-bottom: 40px;
-  font-family: "Open Sans", sans-serif;
+  font-family: "Irish Grover", serif;
+  font-weight: 400;
+  font-style: normal;
+  color: var(--main-color);
+  letter-spacing: 2px;
 }
 
 .hero-button {
   display: inline-block;
   width: fit-content;
-  padding: 15px 30px;
+  padding: 10px 25px;
   font-size: 1.2rem;
-  font-weight: 600;
+  font-weight: 500;
   color: #fff;
-  background-color: #ff6f61;
-  border-radius: 50px;
+  background-color: var(--main-color);
+  border-radius: 8px;
   text-decoration: none;
 }
 
 .hero-button:hover {
   color: white;
-  background-color: #e65a50;
+  background-color: var(--sec-color);
   transform: scale(1.05);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
@@ -554,36 +584,6 @@ nav ul a.active {
   .shop,
   .admin {
     margin-top: 6rem !important;
-  }
-}
-
-@media (max-width: 480px) {
-  .logo {
-    flex-basis: 100%;
-    text-align: center;
-  }
-  .links {
-    padding-left: 0;
-  }
-}
-
-/* For Medium Devices */
-@media (max-width: 400px) {
-  .nav {
-    padding: 11px;
-  }
-  .logo {
-    font-size: 1rem;
-  }
-  .cart {
-    width: 320px;
-  }
-}
-
-@media (max-width: 378px) {
-  header .container {
-    justify-content: center;
-    gap: 10px;
   }
 }
 
