@@ -90,7 +90,8 @@ function renderItems(items, categoryId) {
 
   items.forEach((item) => {
     const itemElement = document.createElement("div");
-    itemElement.className = "col-sm-6 col-md-4 mb-4";
+    itemElement.className =
+      "col-sm-6 col-md-4 mb-4 d-flex justify-content-start";
     itemElement.innerHTML = `
     <div class="card product-box ">
       <img src="${item.imageUrl}" alt="${item.name}" class="product-img">
@@ -116,11 +117,11 @@ function renderItems(items, categoryId) {
                 Add to Cart
                 <i class='fas fa-shopping-cart'></i>
               </a>
-              <a href="javascript:void(0)" class="view-product" data-item-id="${
+              <a href="product.html?productId=${
                 item.id
-              }" data-item='${JSON.stringify(
-      item
-    )}' onclick="viewProduct('${userId}', this)">
+              }" class="view-product" data-item-id="${
+      item.id
+    }" data-item='${JSON.stringify(item)}'>
                 View Details
                 <i class='fas fa-chevron-right text-white'></i>
               </a>

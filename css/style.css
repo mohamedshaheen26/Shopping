@@ -472,7 +472,8 @@ nav ul a.active {
 
 /* SHOP SECTION  */
 .shop,
-.admin {
+.admin,
+.product-details {
   font-family: "Cairo", sans-serif;
   margin-top: 2rem;
 }
@@ -500,27 +501,31 @@ nav ul a.active {
   color: #aaa;
 }
 
-.form-control {
+.search {
   padding: 10px 20px;
   text-indent: 25px;
   border: 1px solid rgba(169, 84, 63, 1) !important;
 }
 
-.form-control:focus {
+.search:focus {
   box-shadow: none !important;
+}
+
+.breadcrumb-item:not(.active):hover {
+  text-decoration: underline !important;
 }
 
 .card-body {
   box-shadow: 0 4px 4px rgba(238, 56, 149, 0.09) !important;
 }
 
-.product-img {
+.product-details .product-img {
   width: 100%;
   aspect-ratio: 1/1;
   object-fit: cover;
   margin-bottom: 1rem;
 }
-.card-title {
+.product-details .card-title {
   font-size: 1.1rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -552,6 +557,19 @@ nav ul a.active {
 .view-product:hover {
   color: white;
   background-color: hsl(249, 32%, 17%);
+}
+
+.product-details h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: var(--main-color);
+}
+
+.product-image {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  margin-bottom: 1rem;
 }
 
 .delete-item {
