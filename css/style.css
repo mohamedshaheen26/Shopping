@@ -23,7 +23,28 @@
 
 ::selection {
   color: var(--text-color);
+  background-color: var(--bg-color);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  background-color: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb {
   background-color: var(--main-color);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--sec-color);
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--bg-color);
+}
+
+::-webkit-scrollbar-track:hover {
+  background-color: var(--bg-color);
 }
 
 .container {
@@ -249,6 +270,7 @@ nav ul a {
   color: white;
   font-size: 1rem;
   font-weight: 500;
+  font-family: "cairo", sans-serif;
 }
 
 nav ul a:hover,
@@ -667,4 +689,23 @@ nav ul a.active {
   100% {
     transform: rotate(360deg);
   }
+}
+
+footer {
+  font-family: "cairo", sans-serif;
+  text-align: left;
+  padding: 25px 60px;
+  background-color: rgba(30, 82, 130, 1);
+}
+
+@media (max-width: 768px) {
+  footer {
+    padding-inline: 20px;
+    padding-block: 10px;
+  }
+}
+
+footer .social-links a {
+  color: white;
+  font-size: 25px;
 }
