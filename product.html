@@ -12,45 +12,65 @@
 
 <body>
   <header>
-    <nav class="navbar navbar-expand-lg">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="index.html" class="logo">
-          Vé.a
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
-          aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="justify-content-center collapse navbar-collapse" id="navbarNavDropdown">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="index.html">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="products.html">Products</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="admin.html">Admin</a>
-            </li>
-          </ul>
-
-        </div>
-        <nav>
-          <ul>
-            <li>
-              <a class="cart_icon" href="javascript:void(0)" id="cart-icon" title="Add to Card">
-                <i class="fas fa-shopping-cart"></i>
-              </a>
-            </li>
-            <li>
-              <a href="login.html" id="logoutButton" title="Logout">
-                <i class="fa-solid fa-arrow-right-from-bracket"></i>
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </div>
+    <!-- NAV  -->
+    <a href="index.html" class="logo">
+      Vé.a
+    </a>
+    <nav>
+      <ul class="links">
+        <li>
+          <a class="home" href="index.html">
+            Home
+          </a>
+        </li>
+        <li>
+          <a class="active" href="products.html">
+            Products
+          </a>
+        </li>
+        <li>
+          <a href="admin.html">
+            Admin
+          </a>
+        </li>
+      </ul>
     </nav>
+    <nav>
+      <ul>
+        <li>
+          <a class="cart_icon" href="javascript:void(0)" id="cart-icon" title="Add to Card">
+            <i class="fas fa-shopping-cart"></i>
+          </a>
+        </li>
+        <li>
+          <a href="login.html" id="logoutButton" title="Logout">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="cart">
+      <h2 class="cart-title">Your Cart</h2>
+
+      <!-- CONTENT  -->
+      <div class="cart-content">
+
+
+      </div>
+
+      <!-- TOTAL   -->
+      <div class="total">
+        <div class="total-title">Total</div>
+        <div class="total-price">$0</div>
+      </div>
+      <!-- BUY BUTTON  -->
+      <button type="button" class="btn-buy">Buy Now</button>
+      <!-- CART CLOSE  -->
+      <a href="javascript:void(0)">
+        <i class='fas fa-times' id="cart-close"></i>
+      </a>
+    </div>
   </header>
 
   <section class="product-details p-5" id="productDetails">
