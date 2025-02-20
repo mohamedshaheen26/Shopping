@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="index.html" class="logo">
+          Vé.a
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+          aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="justify-content-center collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="products.html">Products</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="admin.html">Admin</a>
+            </li>
+          </ul>
+
+        </div>
+        <nav>
+          <ul>
+            <li>
+              <a class="cart_icon" href="javascript:void(0)" id="cart-icon" title="Add to Card">
+                <i class="fas fa-shopping-cart"></i>
+              </a>
+            </li>
+            <li>
+              <a href="login.html" id="logoutButton" title="Logout">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </nav>
+  </header>
+
+  <section class="product-details p-5" id="productDetails">
+    <div class="container">
+      <div id="alertContainer" class="container mt-3"></div>
+
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" id="breadcrumb">
+        </ol>
+      </nav>
+      <div class="row" id="productDetailsContainer">
+        <!--  create [product details] -->
+      </div>
+
+
+      <div class="similar-products">
+        <h2>Similar Products</h2>
+        <div class="row" id="similarProducts">
+          <!-- Similar products will be populated dynamically -->
+        </div>
+      </div>
+    </div>
+  </section>
+  <div id="loading" class="loading">
+    <div class="spinner"></div> <!-- You can replace this with any loader animation -->
+    <p>Loading Product...</p>
+  </div>
+
+
+  <footer class="text-white">
+    <div class="row">
+      <div class="col-md-4 mb-3">
+        <a href="#" class="logo text-white">
+          Vé.a
+        </a>
+        <ul class="d-block">
+          Why Choose Us?   
+          <li>✔️ Stylish designs & premium quality</li>
+          <li>✔️ Exclusive deals & discounts all year round</li>
+          <li>✔️ Fast
+            shipping & excellent customer support</li>
+        </ul>
+      </div>
+      <div class="col-md-2 mb-3">
+        <h4>About Us</h4>
+        <ul>
+          <li class="mb-2"><a class="text-white" href="index.html">Home</a></li>
+          <li class="mb-2"><a class="text-white" href="products.html">Find a Product</a></li>
+          <li class="mb-2"><a class="text-white" href="#">About Us</a></li>
+          <li class="mb-2"><a class="text-white" href="#">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="col-md-3 mb-3">
+        <h4>Contact Us</h4>
+        <ul>
+          <li class="mb-2">
+            <i class="fas fa-phone"></i>
+            +20191342347
+          </li>
+          <li class="mb-2">
+            <i class="fas fa-map-marker-alt"></i>
+            123 Main Street, Anytown, USA
+          </li>
+          <li class="mb-2">
+            <i class="fas fa-envelope"></i>
+            example@example.com
+          </li>
+      </div>
+      <div class="col-md-3 mb-3">
+        <h4>Request a more details</h4>
+        <input type="email" placeholder="Email..." class="form-control">
+        <ul class="social-icons mt-3 d-flex justify-content-between">
+          <li class="social-links">
+            <a href="https://www.facebook.com/share/19QfGkoNqr/" target="_blank">
+              <i class="fab fa-facebook">
+              </i>
+            </a>
+          </li>
+          <li class="social-links">
+            <a href="https://www.instagram.com/vea2_0?igsh=bXl3djg2a2sxMTIw" target="_blank">
+              <i class="fab fa-instagram">
+              </i>
+            </a>
+          </li>
+          <li class="social-links">
+            <a href="https://www.tiktok.com/@vea2_0?_t=ZS-8u4nuQNjGAJ&_r=1" target="_blank">
+              <i class="fab fa-tiktok">
+              </i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+  <script src="js/product.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/cart.js" defer></script>
+</body>
+
+</html>
