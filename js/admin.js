@@ -199,9 +199,6 @@ async function displayCategories() {
             ${
               userId !== null
                 ? `
-                 <button class="w-auto p-1 bg-transparent text-secondary m-0" onclick="openEditCategoryModal(${category.id}, '${category.name}')">
-                 <i class="fas fa-edit"></i>
-                 </button>
                 <button class="w-auto p-1 bg-transparent text-danger m-0" id="delete-category" onclick="deleteCategory(${category.id})">
                 <i class="fas fa-trash"></i>
                 </button>`
@@ -220,50 +217,50 @@ async function displayCategories() {
 }
 
 // Open the edit category modal
-function openEditCategoryModal(categoryId, categoryName) {
-  // Populate the modal fields
-  document.getElementById("editCategoryName").value = categoryName;
-  document.getElementById("editCategoryId").value = categoryId;
+// function openEditCategoryModal(categoryId, categoryName) {
+//   // Populate the modal fields
+//   document.getElementById("editCategoryName").value = categoryName;
+//   document.getElementById("editCategoryId").value = categoryId;
 
-  // Open the modal
-  const modal = new bootstrap.Modal(
-    document.getElementById("editCategoryModal")
-  );
-  modal.show();
-}
+//   // Open the modal
+//   const modal = new bootstrap.Modal(
+//     document.getElementById("editCategoryModal")
+//   );
+//   modal.show();
+// }
 
-async function updateCategory() {
-  const categoryId = document.getElementById("editCategoryId").value;
-  const categoryName = document.getElementById("editCategoryName").value;
+// async function updateCategory() {
+//   const categoryId = document.getElementById("editCategoryId").value;
+//   const categoryName = document.getElementById("editCategoryName").value;
 
-  try {
-    const response = await fetch(
-      `${API_BASE_URL}/Category/Update/${categoryId}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name: categoryName }),
-      }
-    );
+//   try {
+//     const response = await fetch(
+//       `${API_BASE_URL}/Category/Update/${categoryId}`,
+//       {
+//         method: "PUT",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({ name: categoryName }),
+//       }
+//     );
 
-    if (!response.ok) throw new Error("Failed to update category");
+//     if (!response.ok) throw new Error("Failed to update category");
 
-    // Close the modal
-    const modal = bootstrap.Modal.getInstance(
-      document.getElementById("editCategoryModal")
-    );
-    modal.hide();
+//     // Close the modal
+//     const modal = bootstrap.Modal.getInstance(
+//       document.getElementById("editCategoryModal")
+//     );
+//     modal.hide();
 
-    // Refresh the categories table
-    displayCategories();
-    showAlert(`${categoryName} Category updated successfully!`, "success");
-  } catch (error) {
-    console.error("Error updating category:", error);
-    showAlert("Failed to update category. Please try again.", "danger");
-  }
-}
+//     // Refresh the categories table
+//     displayCategories();
+//     showAlert(`${categoryName} Category updated successfully!`, "success");
+//   } catch (error) {
+//     console.error("Error updating category:", error);
+//     showAlert("Failed to update category. Please try again.", "danger");
+//   }
+// }
 
 // Delete an Category
 async function deleteCategory(categoryId) {
@@ -307,9 +304,6 @@ async function displayProducts() {
             ${
               userId !== null
                 ? `
-                <button class="w-auto p-1 bg-transparent text-secondary m-0" onclick="openEditProductModal(${product.id})">
-                <i class="fas fa-edit"></i>
-                </button>
                 <button class="w-auto p-1 bg-transparent text-danger m-0"  id="delete-product" onclick="deleteProduct(${product.id})">
                   <i class="fas fa-trash"></i>
                 </>`
@@ -328,89 +322,90 @@ async function displayProducts() {
 }
 
 // Open the edit product modal
-async function openEditProductModal(productId) {
-  try {
-    // Fetch product details
-    const response = await fetch(`${API_BASE_URL}/Product/${productId}`);
-    if (!response.ok) throw new Error("Failed to fetch product details");
+// async function openEditProductModal(productId) {
+//   try {
+//     // Fetch product details
+//     const response = await fetch(`${API_BASE_URL}/Product/${productId}`);
+//     if (!response.ok) throw new Error("Failed to fetch product details");
 
-    const product = await response.json();
+//     const product = await response.json();
+//     console.log(product);
 
-    // Populate the modal fields
-    document.getElementById("editProductName").value = product.name;
-    document.getElementById("editProductDescription").value =
-      product.description;
-    document.getElementById("editProductPrice").value = product.price;
-    document.getElementById("editProductStock").value = product.stock;
-    document.getElementById("editProductId").value = product.id;
+//     // Populate the modal fields
+//     document.getElementById("editProductName").value = product.name;
+//     document.getElementById("editProductDescription").value =
+//       product.description;
+//     document.getElementById("editProductPrice").value = product.price;
+//     document.getElementById("editProductStock").value = product.stock;
+//     document.getElementById("editProductId").value = product.id;
 
-    // Populate the category dropdown
-    const categorySelect = document.getElementById("editProductCategory");
-    categorySelect.innerHTML = "";
-    const categoriesResponse = await fetch(
-      `${API_BASE_URL}/Category/AllCategories`
-    );
-    const categories = await categoriesResponse.json();
-    categories.forEach((category) => {
-      const option = document.createElement("option");
-      option.value = category.id;
-      option.textContent = category.name;
-      if (category.id === product.categoryId) option.selected = true;
-      categorySelect.appendChild(option);
-    });
+//     // Populate the category dropdown
+//     const categorySelect = document.getElementById("editProductCategory");
+//     categorySelect.innerHTML = "";
+//     const categoriesResponse = await fetch(
+//       `${API_BASE_URL}/Category/AllCategories`
+//     );
+//     const categories = await categoriesResponse.json();
+//     categories.forEach((category) => {
+//       const option = document.createElement("option");
+//       option.value = category.id;
+//       option.textContent = category.name;
+//       if (category.id === product.categoryId) option.selected = true;
+//       categorySelect.appendChild(option);
+//     });
 
-    // Open the modal
-    const modal = new bootstrap.Modal(
-      document.getElementById("editProductModal")
-    );
-    modal.show();
-  } catch (error) {
-    console.error("Error fetching product details:", error);
-    showAlert("Failed to fetch product details. Please try again.", "danger");
-  }
-}
+//     // Open the modal
+//     const modal = new bootstrap.Modal(
+//       document.getElementById("editProductModal")
+//     );
+//     modal.show();
+//   } catch (error) {
+//     console.error("Error fetching product details:", error);
+//     showAlert("Failed to fetch product details. Please try again.", "danger");
+//   }
+// }
 
-async function updateProduct() {
-  const productId = document.getElementById("editProductId").value;
-  const productName = document.getElementById("editProductName").value;
-  const productDescription = document.getElementById(
-    "editProductDescription"
-  ).value;
-  const productPrice = document.getElementById("editProductPrice").value;
-  const productStock = document.getElementById("editProductStock").value;
-  const productCategory = document.getElementById("editProductCategory").value;
+// async function updateProduct() {
+//   const productId = document.getElementById("editProductId").value;
+//   const productName = document.getElementById("editProductName").value;
+//   const productDescription = document.getElementById(
+//     "editProductDescription"
+//   ).value;
+//   const productPrice = document.getElementById("editProductPrice").value;
+//   const productStock = document.getElementById("editProductStock").value;
+//   const productCategory = document.getElementById("editProductCategory").value;
 
-  try {
-    const response = await fetch(`${API_BASE_URL}/Product/${productId}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: productName,
-        description: productDescription,
-        price: productPrice,
-        stock: productStock,
-        categoryId: productCategory,
-      }),
-    });
+//   try {
+//     const response = await fetch(`${API_BASE_URL}/Product/${productId}`, {
+//       method: "PUT",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({
+//         name: productName,
+//         description: productDescription,
+//         price: productPrice,
+//         stock: productStock,
+//         categoryId: productCategory,
+//       }),
+//     });
 
-    if (!response.ok) throw new Error("Failed to update product");
+//     if (!response.ok) throw new Error("Failed to update product");
 
-    // Close the modal
-    const modal = bootstrap.Modal.getInstance(
-      document.getElementById("editProductModal")
-    );
-    modal.hide();
+//     // Close the modal
+//     const modal = bootstrap.Modal.getInstance(
+//       document.getElementById("editProductModal")
+//     );
+//     modal.hide();
 
-    // Refresh the products table
-    displayProducts();
-    showAlert(`${productName} Product updated successfully!`, "success");
-  } catch (error) {
-    console.error("Error updating product:", error);
-    showAlert("Failed to update product. Please try again.", "danger");
-  }
-}
+//     // Refresh the products table
+//     displayProducts();
+//     showAlert(`${productName} Product updated successfully!`, "success");
+//   } catch (error) {
+//     console.error("Error updating product:", error);
+//     showAlert("Failed to update product. Please try again.", "danger");
+//   }
+// }
 
 // Delete an Product
 async function deleteProduct(productId) {

@@ -31,7 +31,7 @@ function showAlert(message, type) {
 // Fetch categories and random images
 async function fetchCategoriesWithRandomImages() {
   const loading = document.getElementById("loading");
-  
+
   try {
     // Show loader
     loading.style.display = "flex";
@@ -69,11 +69,7 @@ async function fetchCategoriesWithRandomImages() {
 
       // Pick a random product image (fallback if no products)
       const randomProduct =
-        categoryProducts.length > 0
-          ? categoryProducts[
-              Math.floor(Math.random() * categoryProducts.length)
-            ]
-          : null;
+        categoryProducts.length > 0 ? categoryProducts[0] : null;
 
       const imageUrl = randomProduct
         ? randomProduct.imageUrl // Use product's image if available

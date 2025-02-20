@@ -90,20 +90,43 @@ function renderItems(items, categoryId) {
 
   items.forEach((item) => {
     const itemElement = document.createElement("div");
-    itemElement.className = "col-sm-6 col-md-4 col-lg-3 mb-4";
+    itemElement.className = "col-sm-6 col-md-4 mb-4";
     itemElement.innerHTML = `
-      <div class="product-box">
-        <img src="${item.imageUrl}" alt="${item.name}" class="product-img">
-        <h2 class="product-title">${item.name}</h2>
-        <span class="product-price">Price: $${item.price}</span>
-        <a href="javascript:void(0)" class="add-cart" data-item-id="${
-          item.id
-        }" data-item='${JSON.stringify(
+    <div class="card product-box ">
+      <img src="${item.imageUrl}" alt="${item.name}" class="product-img">
+      <div class="card-body p-4">
+       <div class="d-flex justify-content-between">
+          <h5 class="card-title">${item.name}</h5>
+          <span class="product-price">${item.price}EGP</span>
+        </div>
+        <div class="text-warning mb-3">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="far fa-star"></i>
+          <span class="text-muted">available</span>
+        </div>
+        <div class="d-flex justify-content-evenly">
+              <a href="javascript:void(0)" class="add-cart" data-item-id="${
+                item.id
+              }" data-item='${JSON.stringify(
       item
     )}' onclick="addToCart('${userId}', this)">
-          <i class='fas fa-shopping-cart'></i>
-        </a>
+                Add to Cart
+                <i class='fas fa-shopping-cart'></i>
+              </a>
+              <a href="javascript:void(0)" class="view-product" data-item-id="${
+                item.id
+              }" data-item='${JSON.stringify(
+      item
+    )}' onclick="viewProduct('${userId}', this)">
+                View Details
+                <i class='fas fa-chevron-right text-white'></i>
+              </a>
+            </div>
       </div>
+    </div>
     `;
     itemsContainer.appendChild(itemElement);
   });
