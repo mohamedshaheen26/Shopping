@@ -20,9 +20,6 @@ function initializeCart() {
   }
 }
 
-// Call this function when the page loads
-initializeCart();
-
 // Fetch and display items based on the category
 async function fetchCategoryProducts(categoryId) {
   const loading = document.getElementById("loading");
@@ -89,7 +86,12 @@ function renderItems(items, categoryId) {
   }
 
   items.forEach((item) => {
+    const isAvailable = item.stock > 0;
+    const stockText = isAvailable
+      ? `<span>available</span>`
+      : `<span>unavailable</span>`;
     const itemElement = document.createElement("div");
+
     itemElement.className =
       "col-sm-6 col-md-4 mb-4 d-flex justify-content-start";
     itemElement.innerHTML = `
@@ -106,25 +108,21 @@ function renderItems(items, categoryId) {
           <i class="fas fa-star"></i>
           <i class="fas fa-star"></i>
           <i class="far fa-star"></i>
-          <span class="text-muted">available</span>
+          <span class="text-muted">${stockText}</span>
         </div>
         <div class="d-flex justify-content-evenly">
-              <a href="javascript:void(0)" class="add-cart" data-item-id="${
-                item.id
-              }" data-item='${JSON.stringify(
+              <a href="javascript:void(0)"class="add-cart ${
+                isAvailable ? "" : "disabled"
+              }"  data-item-id="${item.id}" data-item='${JSON.stringify(
       item
-    )}' onclick="addToCart('${userId}', this)">
+    ).replace(/'/g, "&apos;")}' onclick="addToCart('${userId}', this)">
                 Add to Cart
                 <i class='fas fa-shopping-cart'></i>
               </a>
-              <a href="product.html?productId=${
-                item.id
-              }" class="view-product" data-item-id="${
-      item.id
-    }" data-item='${JSON.stringify(item)}'>
+              <a href="product.html?productId=${item.id}" class="view-product">
                 View Details
                 <i class='fas fa-chevron-right text-white'></i>
-              </a>
+              </a>  
             </div>
       </div>
     </div>

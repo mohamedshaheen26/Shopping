@@ -73,11 +73,11 @@ function updateCartUI(cartItems) {
     const cartItemElement = document.querySelector(".cart-content table tbody");
     cartItemElement.innerHTML += `
               <tr>
-                <td>
-                  <div class="d-flex">
-                    <img src="${item.imageUrl}" height="100" width="100" alt="${
-      item.productName
-    }">
+                <td class="w-50">
+                  <div class="d-flex align-items-center">
+                    <img class="me-3" src="${
+                      item.imageUrl
+                    }" height="100" width="100" alt="${item.productName}">
                     <h6>${item.productName}</h6>
                   </div>
                 </td>
@@ -167,9 +167,6 @@ async function addToCart(userId, element) {
 
   // Update localStorage
   localStorage.setItem(cartKey, JSON.stringify(cart));
-
-  // Update the cart UI
-  updateCartUI(cart.cartItems);
 
   showAlert(`${item.name} added to cart!`, "success");
 }

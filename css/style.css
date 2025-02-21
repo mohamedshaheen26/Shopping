@@ -62,10 +62,6 @@ body {
   font-family: "Times New Roman", Times, serif !important;
 }
 
-img {
-  width: 100%;
-}
-
 ul {
   margin: 0;
   padding: 0;
@@ -99,7 +95,7 @@ a:hover {
 
 .loader-spinner {
   border: 8px solid #f3f3f3;
-  border-top: 8px solid var(--main-color);
+  border-top: 8px solid var(--bg-color);
   border-radius: 50%;
   width: 60px;
   height: 60px;
@@ -123,15 +119,17 @@ a:hover {
 }
 
 .main {
+  margin-top: 100px;
   background-color: #fff;
   border-radius: 15px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
   padding: 20px 20px;
   width: 400px;
+  font-family: "Cairo", sans-serif;
 }
 
 .main h1 {
-  color: var(--main-color);
+  color: rgba(255, 199, 0, 1);
   text-align: center;
 }
 
@@ -154,7 +152,7 @@ a:hover {
   border: none;
   color: white;
   cursor: pointer;
-  background-color: var(--sec-color);
+  background-color: var(--bg-color);
   width: 100%;
   font-size: 16px;
 }
@@ -235,9 +233,6 @@ header {
   .logo {
     font-size: 2rem;
   }
-  .cart {
-    width: 320px;
-  }
 }
 
 .logo:hover {
@@ -303,10 +298,6 @@ nav ul a.active {
 }
 
 /* CART  */
-
-.cart.active {
-  right: 0;
-}
 .cart-title {
   text-align: center;
   font-size: 1.5rem;
@@ -412,14 +403,6 @@ nav ul a.active {
 .btn-buy:hover {
   background-color: var(--main-color);
   color: white;
-}
-#cart-close {
-  position: absolute;
-  top: 1rem;
-  right: 0.8rem;
-  font-size: 2rem;
-  color: var(--text-color);
-  cursor: pointer;
 }
 
 /* Hero Section Styling */
@@ -676,6 +659,12 @@ nav ul a.active {
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(150, 150, 150, 0.1);
 }
+
+.categoriesTable button,
+.productsTable button {
+  border: none;
+}
+
 /* ================ RESPONSIVE & BREAKPOINTS ============= */
 @media (max-width: 1080px) {
   .nav {
@@ -687,13 +676,6 @@ nav ul a.active {
   }
   section {
     padding: 3rem 0 2rem;
-  }
-}
-
-/* For Small Devices */
-@media (max-width: 360px) {
-  .cart {
-    width: 280px;
   }
 }
 

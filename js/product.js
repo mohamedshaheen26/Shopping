@@ -104,6 +104,11 @@ async function fetchSimilarProducts(productId) {
     similarProductsContainer.innerHTML = "";
 
     similarProducts.slice(0, 3).forEach((product) => {
+      const isAvailable = product.stock > 0;
+      const stockText = isAvailable
+        ? `<span>available</span>`
+        : `<span>unavailable</span>`;
+
       if (product.id !== productId) {
         similarProductsContainer.innerHTML += `
         <div class="col-sm-6 col-md-4 mb-4 d-flex justify-content-start">
@@ -122,22 +127,20 @@ async function fetchSimilarProducts(productId) {
                 <i class="fas fa-star"></i>
                 <i class="fas fa-star"></i>
                 <i class="far fa-star"></i>
-                <span class="text-muted">available</span>
+               <span class="text-muted">${stockText}</span>
               </div>
               <div class="d-flex justify-content-evenly">
-                    <a href="javascript:void(0)" class="add-cart" data-item-id="${
-                      product.id
-                    }" data-item='${JSON.stringify(
+                    <a href="javascript:void(0)" class="add-cart ${
+                      isAvailable ? "" : "disabled"
+                    }" data-item-id="${product.id}" data-item='${JSON.stringify(
           product
-        )}' onclick="addToCart('${userId}', this)">
+        ).replace(/'/g, "&apos;")}' onclick="addToCart('${userId}', this)">
                       Add to Cart
                       <i class='fas fa-shopping-cart'></i>
                     </a>
                     <a href="product.html?productId=${
                       product.id
-                    }" class="view-product" data-item-id="${
-          product.id
-        }" data-item='${JSON.stringify(product)}'>
+                    }" class="view-product">
                       View Details
                       <i class='fas fa-chevron-right text-white'></i>
                     </a>
