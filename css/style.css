@@ -571,9 +571,11 @@ nav ul a.active {
   padding-left: 50px;
 }
 
-.new-collection button {
+.new-collection a {
+  font-family: "Cairo", sans-serif;
   margin-left: 50px;
   margin-top: 30px;
+  border: none;
 }
 
 .new-collection h2,

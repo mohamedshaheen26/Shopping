@@ -1,6 +1,8 @@
-// cart.js
+// Initialize cart on page load
+initializeCart();
+loadCartFromLocalStorage();
 
-// Initialize cart in localStorage
+// Initialize cart in localStorage (if needed)
 function initializeCart() {
   const userId = window.localStorage.getItem("userId"); // Get the logged-in user's ID
   if (!userId) return;
@@ -20,12 +22,13 @@ function initializeCart() {
   }
 }
 
-// Load cart from localStorage on page load
-function loadCartFromLocalStorage() {
+// Load cart from API on page load
+async function loadCartFromLocalStorage() {
   const userId = window.localStorage.getItem("userId");
   if (!userId) {
     document.querySelector(".cart-content table tbody").innerHTML =
       "<tr><td colspan='5' class='text-center'><p>You Must be Log in to View Your Cart</p></td></tr>";
+    return;
   }
 
   const cartKey = `cart_${userId}`;
@@ -33,6 +36,9 @@ function loadCartFromLocalStorage() {
 
   if (cart) {
     updateCartUI(cart.cartItems);
+  } else {
+    document.querySelector(".cart-content table tbody").innerHTML =
+      "<tr><td colspan='5' class='text-center'><p>Your cart is empty.</p></td></tr>";
   }
 }
 
@@ -139,34 +145,56 @@ async function addToCart(userId, element) {
   const itemString = element.getAttribute("data-item");
   const item = JSON.parse(itemString);
 
-  const cartKey = `cart_${userId}`;
-  const cart = JSON.parse(localStorage.getItem(cartKey));
+  console.log("Item being added:", item); // Debugging
 
-  // Check if the item is already in the cart
-  const isItemInCart = cart.cartItems.some(
-    (cartItem) => cartItem.productId === item.id
-  );
+  // Fetch the user's cart
+  const cart = await fetchCart(userId);
+  if (!cart) {
+    // If no cart exists, create one
+    const cartId = await createCart(userId);
+    if (!cartId) {
+      showAlert("Failed to create a cart.", "error");
+      return;
+    }
+  }
 
-  if (isItemInCart) {
-    showAlert(`${item.name} is already in your cart!`, "warning");
+  // Add the item to the server cart
+  const updatedCart = await addItemToCart(cart.id, item);
+  if (!updatedCart) {
+    showAlert("Failed to add item to cart.", "error");
     return;
   }
 
-  // Add the item to the cart
-  const newCartItem = {
-    id: Date.now(), // Generate a unique ID for the cart item
-    productId: item.id,
-    productName: item.name,
-    imageUrl: item.imageUrl,
-    price: item.price,
-    quantity: 1,
+  // Add the item to local storage
+  const cartKey = `cart_${userId}`;
+  const localCart = JSON.parse(localStorage.getItem(cartKey)) || {
+    cartItems: [],
+    totalPrice: 0,
   };
 
-  cart.cartItems.push(newCartItem);
-  cart.totalPrice += item.price;
+  const existingItem = localCart.cartItems.find(
+    (cartItem) => cartItem.productId === item.id
+  );
 
-  // Update localStorage
-  localStorage.setItem(cartKey, JSON.stringify(cart));
+  if (existingItem) {
+    // If the item already exists, increment the quantity
+    existingItem.quantity += 1;
+  } else {
+    // If the item doesn't exist, add it to the cart
+    localCart.cartItems.push({
+      id: item.id, // Unique ID for the cart item
+      productId: item.id, // ID of the product
+      productName: item.name, // Name of the product
+      price: item.price, // Price of the product
+      quantity: 1, // Default quantity
+      imageUrl: item.imageUrl, // URL of the product image
+    });
+  }
+
+  console.log("Updated local cart:", localCart); // Debugging
+
+  // Update local storage
+  localStorage.setItem(cartKey, JSON.stringify(localCart));
 
   showAlert(`${item.name} added to cart!`, "success");
 }
@@ -178,26 +206,30 @@ async function removeFromCart(cartItemId, event) {
   const userId = window.localStorage.getItem("userId");
   if (!userId) return;
 
-  const cartKey = `cart_${userId}`;
-  const cart = JSON.parse(localStorage.getItem(cartKey));
-
-  // Find the item to remove
-  const itemIndex = cart.cartItems.findIndex((item) => item.id === cartItemId);
-  if (itemIndex === -1) return;
-
-  // Update the total price
-  const removedItem = cart.cartItems[itemIndex];
-  cart.totalPrice -= removedItem.price * removedItem.quantity;
+  // Fetch the user's cart
+  const cart = await fetchCart(userId);
+  if (!cart) return;
 
   // Remove the item from the cart
-  cart.cartItems.splice(itemIndex, 1);
+  const updatedCart = await removeItemFromCart(cart.id, cartItemId);
+  if (updatedCart) {
+    showAlert("Item removed from cart!", "success");
+    return;
+  }
 
-  // Update localStorage
-  localStorage.setItem(cartKey, JSON.stringify(cart));
+  // Remove the item from local storage
+  const cartKey = `cart_${userId}`;
+  const localCart = JSON.parse(localStorage.getItem(cartKey));
+
+  localCart.cartItems = localCart.cartItems.filter(
+    (item) => item.id !== cartItemId
+  );
+
+  // Update local storage
+  localStorage.setItem(cartKey, JSON.stringify(localCart));
 
   // Update the cart UI
-  updateCartUI(cart.cartItems);
-
+  updateCartUI(localCart.cartItems);
   showAlert("Item removed from cart!", "success");
 }
 
@@ -209,35 +241,29 @@ async function updateCartItemQuantity(cartItemId, newQuantity, event) {
   if (!userId) return;
 
   const cartKey = `cart_${userId}`;
-  const cart = JSON.parse(localStorage.getItem(cartKey));
+  const localCart = JSON.parse(localStorage.getItem(cartKey));
 
-  // Find the item to update
-  const itemToUpdate = cart.cartItems.find((item) => item.id === cartItemId);
-  if (!itemToUpdate) return;
+  const itemToUpdate = localCart.cartItems.find(
+    (item) => item.id === cartItemId
+  );
 
-  // Update the total price
-  cart.totalPrice -= itemToUpdate.price * itemToUpdate.quantity; // Remove old total
-  itemToUpdate.quantity = newQuantity;
-  cart.totalPrice += itemToUpdate.price * itemToUpdate.quantity; // Add new total
-
-  // Update localStorage
-  localStorage.setItem(cartKey, JSON.stringify(cart));
-
-  // Update the cart UI
-  updateCartUI(cart.cartItems);
+  if (itemToUpdate) {
+    itemToUpdate.quantity = newQuantity;
+    localStorage.setItem(cartKey, JSON.stringify(localCart));
+    updateCartUI(localCart.cartItems);
+  }
 }
 
 // Buy Now
-async function buyNow() {
+async function checkout() {
   const userId = window.localStorage.getItem("userId");
   if (!userId) {
     showAlert("You must be logged in to complete the purchase.", "warning");
     return;
   }
 
-  const cartKey = `cart_${userId}`;
-  const cart = JSON.parse(localStorage.getItem(cartKey));
-
+  // Fetch the user's cart
+  const cart = await fetchCart(userId);
   if (!cart || cart.cartItems.length === 0) {
     showAlert("Your cart is empty.", "warning");
     return;
@@ -245,43 +271,116 @@ async function buyNow() {
 
   // Simulate a successful purchase
   showAlert("Thank you for your purchase!", "success");
-
-  // Clear the cart
-  localStorage.removeItem(cartKey);
-
-  // Update the cart UI
-  updateCartUI([]);
 }
 
-// Initialize cart and load cart data on page load
-initializeCart();
-loadCartFromLocalStorage();
+async function fetchCart(userId) {
+  try {
+    const response = await fetch(
+      `https://nshopping.runasp.net/api/Cart/GetByUser/${userId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`, // Add token for authentication
+        },
+      }
+    );
 
-// Prevent cart from closing when interacting with it
-document.querySelector(".cart").addEventListener("click", (event) => {
-  event.stopPropagation(); // Stop event propagation
-});
+    // If the cart doesn't exist (404), create a new one
+    if (response.status === 404) {
+      const createdCart = await createCart(userId);
+      return createdCart;
+    }
 
-// Close cart when clicking outside
-document.addEventListener("click", (event) => {
-  const cart = document.querySelector(".cart");
-  const cartCloseButton = document.getElementById("cart-close");
+    // If the response is not OK, throw an error
+    if (!response.ok) throw new Error("Failed to fetch cart");
 
-  if (!cart.contains(event.target) && event.target !== cartCloseButton) {
-    cart.style.right = "-100%"; // Hide the cart
+    // Return the cart data
+    const cart = await response.json();
+    console.log("Cart from server:", cart); // Debugging
+    return cart;
+  } catch (error) {
+    console.error("Error fetching cart:", error);
+    return null;
   }
-});
+}
 
-// Close cart when the close button is clicked
-document.getElementById("cart-close").addEventListener("click", (event) => {
-  event.preventDefault(); // Prevent default behavior (e.g., following a link)
-  const cart = document.querySelector(".cart");
-  cart.style.right = "-100%"; // Hide the cart
-});
+// Create a cart for the user
+async function createCart(userId) {
+  try {
+    const response = await fetch(
+      `https://nshopping.runasp.net/api/Cart/Create/${userId}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`, // Add token for authentication
+        },
+      }
+    );
 
-// Toggle cart visibility
-document.getElementById("cart-icon").addEventListener("click", (event) => {
-  event.stopPropagation(); // Stop event propagation
-  const cart = document.querySelector(".cart");
-  cart.style.right = cart.style.right === "0" ? "-100%" : "0";
-});
+    if (!response.ok) throw new Error("Failed to create cart");
+
+    const cart = await response.json();
+    return cart;
+  } catch (error) {
+    console.error("Error creating cart:", error);
+    return null;
+  }
+}
+
+// Add an item to the cart
+async function addItemToCart(cartId, item) {
+  try {
+    const response = await fetch(
+      `https://nshopping.runasp.net/api/Cart/AddItem/${cartId}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          productId: item.id,
+          quantity: 1, // Default quantity
+        }),
+      }
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json(); // Parse the error response
+      console.error("Error details:", errorData); // Log the error details
+      throw new Error("Failed to add item to cart");
+    }
+
+    const updatedCart = await response.json();
+    return updatedCart;
+  } catch (error) {
+    console.error("Error adding item to cart:", error);
+    return null;
+  }
+}
+
+// Remove an item from the cart
+async function removeItemFromCart(cartId, cartItemId) {
+  try {
+    const response = await fetch(
+      `https://nshopping.runasp.net/Cart/RemoveItem/${cartId}/${cartItemId}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`, // Add token for authentication
+        },
+      }
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json(); // Parse the error response
+      console.error("Error details:", errorData); // Log the error details
+      throw new Error("Failed to remove item from cart");
+    }
+
+    const updatedCart = await response.json();
+    return updatedCart;
+  } catch (error) {
+    console.error("Error removing item from cart:", error);
+    return null;
+  }
+}
