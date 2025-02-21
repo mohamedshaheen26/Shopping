@@ -24,8 +24,8 @@ function initializeCart() {
 function loadCartFromLocalStorage() {
   const userId = window.localStorage.getItem("userId");
   if (!userId) {
-    document.querySelector(".cart-content").innerHTML =
-      "<p>You Must be Log in to View Your Cart</p>";
+    document.querySelector(".cart-content table tbody").innerHTML =
+      "<tr><td colspan='5' class='text-center'><p>You Must be Log in to View Your Cart</p></td></tr>";
   }
 
   const cartKey = `cart_${userId}`;
@@ -38,36 +38,54 @@ function loadCartFromLocalStorage() {
 
 // Update the cart UI
 function updateCartUI(cartItems) {
-  const cartContent = document.querySelector(".cart-content");
-  const totalPriceElement = document.querySelector(".total-price");
+  const cartContent = document.querySelector(".cart-content table tbody");
+  const itemsCountElement = document.querySelector(
+    ".cart-content table tbody #items"
+  );
+  const subtotalPriceElement = document.querySelector(
+    ".cart-content table tbody #subtotal"
+  );
+  const shippingElement = document.querySelector(
+    ".cart-content table tbody #shipping"
+  );
+  const discountElement = document.querySelector(
+    ".cart-content table tbody #discount"
+  );
+  const totalPriceElement = document.querySelector(
+    ".cart-content table tfoot #total"
+  );
 
   cartContent.innerHTML = "";
 
   // Handle empty cart
   if (!cartItems || cartItems.length === 0) {
-    cartContent.innerHTML = "<p>Your cart is empty.</p>";
-    totalPriceElement.textContent = "$0";
+    cartContent.innerHTML =
+      "<tr><td colspan='5' class='text-center'><p>Your cart is empty.</p></td></tr>";
+    itemsCountElement.textContent = "0";
+    subtotalPriceElement.textContent = "0";
+    shippingElement.textContent = "0";
+    discountElement.textContent = "0";
+    totalPriceElement.textContent = "0EGP";
     return;
   }
 
   cartItems.forEach((item) => {
-    const cartItemElement = document.createElement("div");
-    cartItemElement.className = "cart-item";
-    cartItemElement.innerHTML = `
-      <div class="row">
-        <div class="col-9">
-          <h6>${item.productName}</h6>
-          <p>$${item.price}</p>
-        </div>
-        <div class="col-3">
-          <button class="btn btn-sm btn-danger" onclick="removeFromCart(${
-            item.id
-          }, event)">
-            <i class="fas fa-trash"></i>
-          </button>
-        </div>
-        <div class="col-12">
-          <div class="d-flex justify-content-center align-items-center gap-3">
+    const cartItemElement = document.querySelector(".cart-content table tbody");
+    cartItemElement.innerHTML += `
+              <tr>
+                <td>
+                  <div class="d-flex">
+                    <img src="${item.imageUrl}" height="100" width="100" alt="${
+      item.productName
+    }">
+                    <h5>${item.productName}</h5>
+                  </div>
+                </td>
+                <td class="text-center align-middle">
+                  <h5>${item.price}EGP</h5>
+                </td>
+                <td class="align-middle">
+                  <div class="quantity-container w-50 d-flex justify-content-center align-items-center gap-2 px-4 m-auto">
             <button class="quantity" ${
               item.quantity === 1 ? "disabled" : ""
             } onclick="updateCartItemQuantity(${item.id}, ${
@@ -82,17 +100,32 @@ function updateCartUI(cartItems) {
               <i class="fas fa-plus"></i>
             </button>
           </div>
-        </div>
-      </div>
+                </td>
+                <td class="text-center align-middle">
+                  <h5>${item.price * item.quantity}EGP</h5>
+                </td>
+                <td class="text-center align-middle">
+                  <button class="btn btn-sm del-cartItem" onclick="removeFromCart(${
+                    item.id
+                  }, event)">
+            <i class="fas fa-times"></i>
+          </button>
+                </td>
+              </tr>
     `;
-    cartContent.appendChild(cartItemElement);
   });
 
-  const totalPrice = cartItems.reduce(
+  itemsCountElement.textContent = cartItems.length;
+  const subtotalPrice = cartItems.reduce(
     (total, item) => total + item.price * item.quantity,
     0
   );
-  totalPriceElement.textContent = `$${totalPrice.toFixed(2)}`;
+  subtotalPriceElement.textContent = `${subtotalPrice.toFixed()}`;
+  shippingElement.textContent = "200";
+  discountElement.textContent = "0";
+
+  const totalPrice = subtotalPrice + 200 - 0;
+  totalPriceElement.textContent = `${totalPrice.toFixed()}EGP`;
 }
 
 // Add to cart
@@ -124,6 +157,7 @@ async function addToCart(userId, element) {
     id: Date.now(), // Generate a unique ID for the cart item
     productId: item.id,
     productName: item.name,
+    imageUrl: item.imageUrl,
     price: item.price,
     quantity: 1,
   };

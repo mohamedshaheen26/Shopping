@@ -111,7 +111,7 @@ async function fetchSimilarProducts(productId) {
             <img src="${product.imageUrl}" alt="${
           product.name
         }" class="product-img">
-            <div class="card-body p-4">
+            <div class="card-body d-flex flex-column justify-content-between p-4">
             <div class="d-flex justify-content-between">
                 <h5 class="card-title">${product.name}</h5>
                 <span class="product-price">${product.price}EGP</span>

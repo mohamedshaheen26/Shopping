@@ -95,7 +95,7 @@ function renderItems(items, categoryId) {
     itemElement.innerHTML = `
     <div class="card product-box ">
       <img src="${item.imageUrl}" alt="${item.name}" class="product-img">
-      <div class="card-body p-4">
+      <div class="card-body d-flex flex-column justify-content-between p-4">
        <div class="d-flex justify-content-between">
           <h5 class="card-title">${item.name}</h5>
           <span class="product-price">${item.price}EGP</span>
