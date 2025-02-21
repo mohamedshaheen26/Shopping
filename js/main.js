@@ -76,6 +76,7 @@ async function fetchCategoriesWithRandomImages() {
         : "https://example.com/images/default-category.jpg"; // Fallback image
 
       const categoryItem = document.createElement("li");
+      categoryItem.className = `class="text-center"`;
       categoryItem.innerHTML = `
         <a href="products.html?categoryId=${category.id}" class="category text-dark">
           <img src="${imageUrl}" alt="${category.name}" style="width: 100px; height: 100px; object-fit: cover;" class="category-img rounded-circle " />

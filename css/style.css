@@ -1,7 +1,6 @@
 /* Google Fonts  */
-@import url("https://fonts.googleapis.com/css2?family=Irish+Grover&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Irish+Grover&family=Italianno&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Rochester&display=swap");
 
 /* Globals  */
 * {
@@ -461,8 +460,12 @@ nav ul a.active {
 }
 
 .products {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  margin: 0 auto;
   gap: 20px;
   margin-top: 2rem;
 }
@@ -474,6 +477,44 @@ nav ul a.active {
   border-radius: 10px;
 }
 
+.slider-container {
+  padding: 0 20px;
+  position: relative;
+  width: 80%;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.collection-container,
+.trending-container {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.collection-item,
+.trending-item {
+  flex: 0 0 100%; /* Each slide takes up 100% of the container */
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 5px; /* Add some spacing between images */
+}
+
+@media (min-width: 768px) {
+  .collection-item,
+  .trending-item {
+    height: 400px;
+  }
+}
+
+.collection-item img,
+.trending-item img {
+  width: 32%; /* Each image takes up roughly 1/3 of the slide */
+  height: auto;
+  display: block;
+  border-radius: 5px; /* Optional: Add rounded corners */
+}
 /* Responsive Design */
 @media (max-width: 768px) {
   .hero-headline {
@@ -486,6 +527,82 @@ nav ul a.active {
     padding: 10px 20px;
     font-size: 1rem;
   }
+}
+
+.new-collection {
+  padding: 0 20px;
+  color: #fff;
+  font-size: 2rem;
+  font-weight: bold;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .new-collection {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .new-collection {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 10px;
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .new-collection {
+    padding: 0 10px;
+    font-size: 1.2rem;
+  }
+}
+.new-collection h2 {
+  font-size: 55px;
+}
+
+.new-collection span {
+  font-size: 48px;
+  color: red;
+  padding-left: 50px;
+}
+
+.new-collection button {
+  margin-left: 50px;
+  margin-top: 30px;
+}
+
+.new-collection h2,
+.new-collection span {
+  font-family: "Rochester", serif;
+  font-weight: 400;
+  font-style: normal;
+  width: fit-content;
+}
+
+.new-collection .one,
+.new-collection .two {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  padding: 50px 20px;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.new-collection .one {
+  background-image: url("../images/new-collection-1.jpeg");
+}
+
+.new-collection .two {
+  background-image: url("../images/new-collection-2.jpeg");
 }
 
 /* SHOP SECTION  */
