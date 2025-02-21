@@ -145,7 +145,8 @@ a:hover {
   box-shadow: 0 0 0 0.25rem rgba(73, 70, 253, 0.25);
 }
 
-button {
+#loginForm button,
+#registerForm button {
   padding: 15px;
   border-radius: 10px;
   margin-top: 15px;
@@ -158,7 +159,8 @@ button {
   font-size: 16px;
 }
 
-button:hover {
+#loginForm button:hover,
+#registerForm button:hover {
   background-color: var(--main-color);
 }
 
@@ -321,7 +323,8 @@ nav ul a.active {
 }
 
 .checkout {
-  border: 1px solid rgba(0, 0, 0, 0.1) ;
+  border-radius: 15px !important;
+  border: 1px solid rgba(0, 0, 0, 0.1);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25) !important;
 }
 
@@ -341,6 +344,11 @@ nav ul a.active {
 .quantity-container {
   background-color: rgba(217, 217, 217, 1);
   border-radius: 10px;
+}
+
+.quantity-container button {
+  outline: none;
+  border: none;
 }
 
 .quantity {
@@ -388,6 +396,8 @@ nav ul a.active {
 }
 
 .btn-buy {
+  width: 100%;
+  border-radius: 15px;
   margin: 10px 0;
   padding: 12px 20px;
   border: none;
@@ -398,6 +408,7 @@ nav ul a.active {
   cursor: pointer;
   text-align: center;
 }
+
 .btn-buy:hover {
   background-color: var(--main-color);
   color: white;
@@ -501,6 +512,15 @@ nav ul a.active {
 .cart {
   font-family: "Cairo", sans-serif;
   padding-top: 80px;
+}
+
+@media (max-width: 768px) {
+  .shop,
+  .admin,
+  .product-details,
+  .cart {
+    padding-top: 100px;
+  }
 }
 
 .section-title {
@@ -668,23 +688,10 @@ nav ul a.active {
   section {
     padding: 3rem 0 2rem;
   }
-  .shop {
-    margin-top: 2rem;
-  }
-}
-
-@media (max-width: 495px) {
-  .shop,
-  .admin {
-    margin-top: 6rem !important;
-  }
 }
 
 /* For Small Devices */
 @media (max-width: 360px) {
-  .shop {
-    margin-top: 1rem;
-  }
   .cart {
     width: 280px;
   }

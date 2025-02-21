@@ -78,14 +78,14 @@ function updateCartUI(cartItems) {
                     <img src="${item.imageUrl}" height="100" width="100" alt="${
       item.productName
     }">
-                    <h5>${item.productName}</h5>
+                    <h6>${item.productName}</h6>
                   </div>
                 </td>
                 <td class="text-center align-middle">
-                  <h5>${item.price}EGP</h5>
+                  <h6>${item.price}EGP</h6>
                 </td>
                 <td class="align-middle">
-                  <div class="quantity-container w-50 d-flex justify-content-center align-items-center gap-2 px-4 m-auto">
+                  <div class="quantity-container d-flex justify-content-between align-items-center gap-2 px-2">
             <button class="quantity" ${
               item.quantity === 1 ? "disabled" : ""
             } onclick="updateCartItemQuantity(${item.id}, ${
@@ -102,7 +102,7 @@ function updateCartUI(cartItems) {
           </div>
                 </td>
                 <td class="text-center align-middle">
-                  <h5>${item.price * item.quantity}EGP</h5>
+                  <h6>${item.price * item.quantity}EGP</h6>
                 </td>
                 <td class="text-center align-middle">
                   <button class="btn btn-sm del-cartItem" onclick="removeFromCart(${
