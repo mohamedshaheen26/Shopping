@@ -33,18 +33,6 @@
   background-color: var(--main-color);
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background-color: var(--sec-color);
-}
-
-::-webkit-scrollbar-track {
-  background-color: var(--bg-color);
-}
-
-::-webkit-scrollbar-track:hover {
-  background-color: var(--bg-color);
-}
-
 .container {
   max-width: 1068px;
   margin: auto;

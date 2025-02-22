@@ -1,6 +1,9 @@
 const API_BASE_URL = "https://nshopping.runasp.net/api";
 const userId = window.localStorage.getItem("userId"); // Get the logged-in user's ID
 
+let allProducts = []; // Store all products fetched from the API
+let currentCategoryId = null; // Store the current category ID
+
 // Initialize cart in localStorage
 function initializeCart() {
   if (!userId) return; // Exit if no user is logged in
@@ -30,20 +33,17 @@ async function fetchCategoryProducts(categoryId) {
     const response = await fetch(`${API_BASE_URL}/Product`);
     if (!response.ok) throw new Error("Failed to fetch products");
 
-    const allProducts = await response.json();
+    allProducts = await response.json(); // Store all products
 
     // Filter products based on the categoryId
-    const filteredProducts = allProducts.filter(
-      (product) => product.categoryId === parseInt(categoryId)
-    );
+    const filteredProducts = categoryId
+      ? allProducts.filter(
+          (product) => product.categoryId === parseInt(categoryId)
+        )
+      : allProducts;
 
-    if (categoryId) {
-      // Render items
-      renderItems(filteredProducts, categoryId);
-    } else {
-      // Render items
-      renderItems(allProducts, categoryId);
-    }
+    // Render items
+    renderItems(filteredProducts, categoryId);
   } catch (error) {
     console.error("Error fetching products:", error);
     document.getElementById("products-list").innerHTML =
@@ -132,6 +132,26 @@ function renderItems(items, categoryId) {
 
 // Extract categoryId from the URL
 const urlParams = new URLSearchParams(window.location.search);
-const categoryId = urlParams.get("categoryId");
+currentCategoryId = urlParams.get("categoryId");
 
-fetchCategoryProducts(categoryId);
+fetchCategoryProducts(currentCategoryId);
+
+// Handle search functionality
+const searchInput = document.querySelector(".search");
+
+searchInput.addEventListener("input", (event) => {
+  const searchTerm = event.target.value.toLowerCase();
+
+  // Filter products based on the search term and current category
+  const filteredProducts = allProducts.filter((product) => {
+    const matchesSearch = product.name.toLowerCase().includes(searchTerm);
+    const matchesCategory = currentCategoryId
+      ? product.categoryId === parseInt(currentCategoryId)
+      : true; // If no category is selected, include all products
+
+    return matchesSearch && matchesCategory;
+  });
+
+  // Render the filtered products
+  renderItems(filteredProducts, currentCategoryId);
+});
