@@ -76,11 +76,11 @@ async function fetchCategoriesWithRandomImages() {
         : "https://example.com/images/default-category.jpg"; // Fallback image
 
       const categoryItem = document.createElement("li");
-      categoryItem.className = `class="text-center"`;
+      categoryItem.className = `text-center`;
       categoryItem.innerHTML = `
         <a href="products.html?categoryId=${category.id}" class="category text-dark">
           <img src="${imageUrl}" alt="${category.name}" style="width: 100px; height: 100px; object-fit: cover;" class="category-img rounded-circle " />
-          <p>${category.name}</p>
+          <p class="mt-2">${category.name}</p>
         </a>
       `;
 

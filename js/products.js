@@ -92,14 +92,13 @@ function renderItems(items, categoryId) {
       : `<span>unavailable</span>`;
     const itemElement = document.createElement("div");
 
-    itemElement.className =
-      "col-sm-6 col-md-4 mb-4 d-flex justify-content-start";
+    itemElement.className = "col-sm-6 col-md-4 mb-4";
     itemElement.innerHTML = `
-    <div class="card product-box ">
+    <div class="card product-box h-100">
       <img src="${item.imageUrl}" alt="${item.name}" class="product-img">
       <div class="card-body d-flex flex-column justify-content-between p-4">
-       <div class="d-flex justify-content-between">
-          <h5 class="card-title">${item.name}</h5>
+       <div class="d-flex justify-content-between gap-3">
+          <h5 class="card-title mb-0">${item.name}</h5>
           <span class="product-price">${item.price}EGP</span>
         </div>
         <div class="text-warning mb-3">

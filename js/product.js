@@ -111,8 +111,8 @@ async function fetchSimilarProducts(productId) {
 
       if (product.id !== productId) {
         similarProductsContainer.innerHTML += `
-        <div class="col-sm-6 col-md-4 mb-4 d-flex justify-content-start">
-          <div class="card product-box ">
+        <div class="col-sm-6 col-md-4 mb-4">
+          <div class="card product-box h-100">
             <img src="${product.imageUrl}" alt="${
           product.name
         }" class="product-img">
