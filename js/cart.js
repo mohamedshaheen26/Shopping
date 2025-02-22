@@ -254,25 +254,6 @@ async function updateCartItemQuantity(cartItemId, newQuantity, event) {
   }
 }
 
-// Buy Now
-async function checkout() {
-  const userId = window.localStorage.getItem("userId");
-  if (!userId) {
-    showAlert("You must be logged in to complete the purchase.", "warning");
-    return;
-  }
-
-  // Fetch the user's cart
-  const cart = await fetchCart(userId);
-  if (!cart || cart.cartItems.length === 0) {
-    showAlert("Your cart is empty.", "warning");
-    return;
-  }
-
-  // Simulate a successful purchase
-  showAlert("Thank you for your purchase!", "success");
-}
-
 async function fetchCart(userId) {
   try {
     const response = await fetch(
@@ -382,5 +363,68 @@ async function removeItemFromCart(cartId, cartItemId) {
   } catch (error) {
     console.error("Error removing item from cart:", error);
     return null;
+  }
+}
+
+// Buy Now
+async function checkout() {
+  const userId = window.localStorage.getItem("userId");
+  if (!userId) {
+    showAlert("You must be logged in to complete the purchase.", "warning");
+    return;
+  }
+
+  // Fetch the user's cart
+  const cartKey = `cart_${userId}`;
+  const localCart = JSON.parse(localStorage.getItem(cartKey));
+
+  if (!localCart || localCart.cartItems.length === 0) {
+    showAlert("Your cart is empty.", "warning");
+    return;
+  }
+
+  // Prepare the order payload
+  const orderPayload = {
+    userId: userId,
+    items: localCart.cartItems.map((item) => ({
+      productId: item.productId,
+      quantity: item.quantity,
+    })),
+  };
+
+  try {
+    // Call the API to create the order
+    const response = await fetch(
+      `https://nshopping.runasp.net/api/Order/Create`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`, // Add token for authentication
+        },
+        body: JSON.stringify(orderPayload),
+      }
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Error details:", errorData);
+      throw new Error("Failed to create order");
+    }
+
+    const order = await response.json();
+    console.log("Order created:", order);
+
+    // Clear the cart after successful order creation
+    localStorage.removeItem(cartKey);
+    updateCartUI([]); // Update the UI to reflect an empty cart
+
+    showAlert(
+      "Thank you for your purchase! Your order has been placed.",
+      "success"
+    );
+  } catch (error) {
+    console.error("Error during checkout:", error);
+    showAlert("Failed to complete the purchase. Please try again.", "error");
   }
 }
