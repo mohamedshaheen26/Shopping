@@ -262,6 +262,10 @@ nav ul a.active {
   font-weight: bold;
 }
 
+.search_icon {
+  font-size: 20px;
+}
+
 .nav-item {
   position: relative;
 }
@@ -467,7 +471,15 @@ nav ul a.active {
   font-weight: bold;
 }
 
-.products a {
+.products li img {
+  transition: 0.3s;
+}
+
+.products li:hover .category img {
+  transform: scale(1.1);
+}
+
+.products .category {
   color: var(--main-color) !important;
 }
 

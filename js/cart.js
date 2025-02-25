@@ -136,11 +136,6 @@ function updateCartUI(cartItems) {
 
 // Add to cart
 async function addToCart(userId, element) {
-  if (!userId) {
-    showAlert("You must be logged in to add items to your cart.", "warning");
-    return;
-  }
-
   // Parse the item string back into an object
   const itemString = element.getAttribute("data-item");
   const item = JSON.parse(itemString);
@@ -153,7 +148,7 @@ async function addToCart(userId, element) {
     // If no cart exists, create one
     const cartId = await createCart(userId);
     if (!cartId) {
-      showAlert("Failed to create a cart.", "error");
+      showAlert("You must be logged in to add items to your cart.", "warning");
       return;
     }
   }
@@ -161,7 +156,7 @@ async function addToCart(userId, element) {
   // Add the item to the server cart
   const updatedCart = await addItemToCart(cart.id, item);
   if (!updatedCart) {
-    showAlert("Failed to add item to cart.", "error");
+    showAlert("You must be logged in to add items to your cart.", "warning");
     return;
   }
 
